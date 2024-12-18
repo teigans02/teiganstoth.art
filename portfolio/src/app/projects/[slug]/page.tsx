@@ -7,10 +7,10 @@ import fs from "fs"
 import path from "path"
 import matter from "gray-matter"
 
+type Params = Promise<{ slug: string }>;
+
 interface Props {
-  params: {
-    slug: string
-  }
+  params: Params
 }
 
 export async function generateStaticParams() {
@@ -20,9 +20,9 @@ export async function generateStaticParams() {
   }))
 }
 
-export default async function ProjectPage({ 
-  params: { slug } 
-}: Props) {
+export default async function ProjectPage({ params }: Props) {
+  const { slug } = await params
+  
   const filePath = path.join(process.cwd(), "src/projects", `${slug}.mdx`)
   
   if (!fs.existsSync(filePath)) {
@@ -30,7 +30,7 @@ export default async function ProjectPage({
   }
 
   const fileContent = fs.readFileSync(filePath, "utf8")
-  const { content, data } = matter(fileContent)
+  const { content } = matter(fileContent)
 
   return (
     <div className="min-h-screen bg-[#F8F8EF]">
