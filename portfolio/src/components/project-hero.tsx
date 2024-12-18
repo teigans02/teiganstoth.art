@@ -5,6 +5,7 @@ import Image from "next/image"
 import { ArrowRightIcon } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 import { useState } from "react"
+import Link from "next/link"
 
 interface ProjectHeroProps {
   project: ProjectMetadata
@@ -15,95 +16,97 @@ export function ProjectHero({ project }: ProjectHeroProps) {
   const [isHovered, setIsHovered] = useState(false)
 
   return (
-    <div className="w-full py-2 md:py-3">
-      <div className="px-8">
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-12 items-center">
-          {/* Content Section */}
-          <div className="space-y-6">
-            <h1 className="text-4xl font-['StyreneA-Regular']">
-              {project.title}
-            </h1>
-            <p className="text-lg">
-              {project.description}
-            </p>
-            
-            {/* Tags */}
-            <div className="flex flex-wrap gap-2">
-              {project.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="px-3 py-1 text-sm rounded-full bg-black text-[#F8F8EF]"
-                >
-                  {tag}
-                </span>
-              ))}
+    <Link href={`/projects/${project.slug}`} className="block">
+      <div className="w-full py-2 md:py-3">
+        <div className="px-8">
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-12 items-center">
+            {/* Content Section */}
+            <div className="space-y-6">
+              <h1 className="text-4xl font-['StyreneA-Regular']">
+                {project.title}
+              </h1>
+              <p className="text-lg">
+                {project.description}
+              </p>
+              
+              {/* Tags */}
+              <div className="flex flex-wrap gap-2">
+                {project.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="px-3 py-1 text-sm rounded-full bg-black text-[#F8F8EF]"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+              
+              {/* Date */}
+              <div className="text-sm">
+                {new Date(project.date).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </div>
             </div>
-            
-            {/* Date */}
-            <div className="text-sm">
-              {new Date(project.date).toLocaleDateString("en-US", {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              })}
-            </div>
-          </div>
 
-          {/* Image Section */}
-          <div 
-            className="relative aspect-[16/9] overflow-hidden rounded-lg"
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-          >
-            <motion.div
-              className="absolute inset-0"
-              animate={{
-                scale: isHovered ? 1.05 : 1
-              }}
-              transition={{
-                duration: 0.4,
-                ease: [0.4, 0, 0.2, 1]
-              }}
+            {/* Image Section */}
+            <div 
+              className="relative aspect-[16/9] overflow-hidden rounded-lg"
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
             >
-              <Image
-                src={imageUrl}
-                alt={`${project.title} preview`}
-                fill
-                className="object-cover"
-                priority
-              />
-            </motion.div>
-            <AnimatePresence>
-              {(isHovered || window.innerWidth < 768) && (
-                <motion.div
-                  initial={{ x: 100, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  exit={{ x: 100, opacity: 0 }}
-                  transition={{ 
-                    type: "spring",
-                    stiffness: 400,
-                    damping: 30
-                  }}
-                  className="absolute bottom-4 right-4 bg-black text-[#F8F8EF] rounded-full p-3 
-                    flex items-center justify-center"
-                >
+              <motion.div
+                className="absolute inset-0"
+                animate={{
+                  scale: isHovered ? 1.05 : 1
+                }}
+                transition={{
+                  duration: 0.4,
+                  ease: [0.4, 0, 0.2, 1]
+                }}
+              >
+                <Image
+                  src={imageUrl}
+                  alt={`${project.title} preview`}
+                  fill
+                  className="object-cover"
+                  priority
+                />
+              </motion.div>
+              <AnimatePresence>
+                {(isHovered || window.innerWidth < 768) && (
                   <motion.div
-                    initial={{ x: -10 }}
-                    animate={{ x: 0 }}
+                    initial={{ x: 100, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    exit={{ x: 100, opacity: 0 }}
                     transition={{ 
                       type: "spring",
                       stiffness: 400,
                       damping: 30
                     }}
+                    className="absolute bottom-4 right-4 bg-black text-[#F8F8EF] rounded-full p-3 
+                      flex items-center justify-center"
                   >
-                    <ArrowRightIcon />
+                    <motion.div
+                      initial={{ x: -10 }}
+                      animate={{ x: 0 }}
+                      transition={{ 
+                        type: "spring",
+                        stiffness: 400,
+                        damping: 30
+                      }}
+                    >
+                      <ArrowRightIcon />
+                    </motion.div>
                   </motion.div>
-                </motion.div>
-              )}
-            </AnimatePresence>
+                )}
+              </AnimatePresence>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   )
 }
