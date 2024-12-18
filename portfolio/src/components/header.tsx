@@ -18,13 +18,13 @@ export default function Header() {
             href="https://www.linkedin.com/in/teigan-stothart-40a8b323a/" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="text-lg hover:underline"
+            className="hidden md:inline text-lg hover:underline"
           >
             LinkedIn
           </a>
           <a 
-            href="mailto:teigans02@icloud.com" 
-            className="text-lg hover:underline"
+            href="mailto:teigans02@icloud.com?subject=Portfolio%20Contact"
+            className="hidden md:inline text-lg hover:underline"
           >
             Contact
           </a>
