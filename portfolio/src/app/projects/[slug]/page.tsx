@@ -33,7 +33,9 @@ export default async function ProjectPage({ params }: Props) {
 
   return (
     <div className="min-h-screen bg-[#F8F8EF]">
-      <Header />
+      <div className="hidden md:block">
+        <Header />
+      </div>
       <div className="p-8">
         <div className="max-w-3xl mx-auto">
           <BackButton />
