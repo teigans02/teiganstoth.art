@@ -4,7 +4,7 @@ import { ProjectMetadata } from "@/types/project"
 import Image from "next/image"
 import { ArrowRightIcon } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 
 interface ProjectHeroProps {
@@ -14,6 +14,18 @@ interface ProjectHeroProps {
 export function ProjectHero({ project }: ProjectHeroProps) {
   const imageUrl = `/images/${project.slug}.jpg`
   const [isHovered, setIsHovered] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+    
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   return (
     <Link href={`/projects/${project.slug}`} className="block">
@@ -45,7 +57,7 @@ export function ProjectHero({ project }: ProjectHeroProps) {
                 />
               </motion.div>
               <AnimatePresence>
-                {(isHovered || window.innerWidth < 768) && (
+                {(isHovered || isMobile) && (
                   <motion.div
                     initial={{ x: 100, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
@@ -75,11 +87,11 @@ export function ProjectHero({ project }: ProjectHeroProps) {
             </div>
 
             {/* Content Section */}
-            <div className="space-y-6 md:order-1">
-              <h1 className="text-4xl font-['StyreneA-Regular']">
+            <div className="space-y-4 md:order-1">
+              <h1 className="text-3xl font-['StyreneA-Regular']">
                 {project.title}
               </h1>
-              <p className="text-lg">
+              <p className="text-md">
                 {project.description}
               </p>
               
@@ -93,15 +105,6 @@ export function ProjectHero({ project }: ProjectHeroProps) {
                     {tag}
                   </span>
                 ))}
-              </div>
-              
-              {/* Date */}
-              <div className="text-sm">
-                {new Date(project.date).toLocaleDateString("en-US", {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                })}
               </div>
             </div>
           </div>
