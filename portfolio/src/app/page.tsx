@@ -8,7 +8,7 @@ export default async function Home() {
   return (
     <div className="min-h-screen bg-[#F8F8EF]">
       <Header />
-      <main className="py-4">
+      <main className="py-4 md:px-10 lg:px-16">
         {projects.map((project) => (
           <ProjectHero key={project.slug} project={project} />
         ))}
