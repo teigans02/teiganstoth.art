@@ -20,8 +20,9 @@ export async function generateStaticParams() {
   }))
 }
 
-export default async function ProjectPage({ params }: Props) {
-  const { slug } = params
+export default async function ProjectPage({ 
+  params: { slug } 
+}: Props) {
   const filePath = path.join(process.cwd(), "src/projects", `${slug}.mdx`)
   
   if (!fs.existsSync(filePath)) {
