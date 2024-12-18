@@ -1,7 +1,35 @@
+import Link from 'next/link';
+
 export default function Header() {
   return (
     <header className="w-full border-b border-black py-6 px-8">
-      <h1 className="text-4xl font-['StyreneA-Regular']">Teigan Stothart</h1>
+      <div className="flex justify-between items-center">
+        <Link href="/" className="text-4xl font-['StyreneA-Regular'] hover:opacity-80">
+          Teigan Stothart
+        </Link>
+        <nav className="space-x-6">
+          <Link 
+            href="/about" 
+            className="text-lg hover:underline"
+          >
+            About
+          </Link>
+          <a 
+            href="https://www.linkedin.com/in/teigan-stothart-40a8b323a/" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="text-lg hover:underline"
+          >
+            LinkedIn
+          </a>
+          <a 
+            href="mailto:teigans02@icloud.com" 
+            className="text-lg hover:underline"
+          >
+            Contact
+          </a>
+        </nav>
+      </div>
     </header>
   );
 }

@@ -12,6 +12,18 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      fontFamily: {
+        styrene: ['StyreneA-Regular', 'sans-serif'],
+      },
+      typography: {
+        DEFAULT: {
+          css: {
+            'h1, h2, h3, h4, h5, h6': {
+              fontFamily: 'StyreneA-Regular, sans-serif',
+            },
+          },
+        },
+      },
     },
   },
   plugins: [
