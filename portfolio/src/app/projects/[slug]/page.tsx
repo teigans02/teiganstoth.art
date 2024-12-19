@@ -40,7 +40,7 @@ export default async function ProjectPage({ params }: Props) {
       <div className="p-8">
         <div className="max-w-3xl mx-auto">
           <BackButton />
-          <article className="mt-8 prose prose-lg prose-headings:font-styrene">
+          <article className="mt-8 prose prose-lg prose-headings:font-styrene prose-img:rounded-lg">
             <MDXRemote source={content} />
           </article>
         </div>

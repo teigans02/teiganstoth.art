@@ -12,7 +12,7 @@ interface ProjectHeroProps {
 }
 
 export function ProjectHero({ project }: ProjectHeroProps) {
-  const imageUrl = `/images/${project.slug}.jpg`
+  const imageUrl = `/images/${project.slug}/hero.jpg`
   const [isHovered, setIsHovered] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
 
@@ -52,8 +52,12 @@ export function ProjectHero({ project }: ProjectHeroProps) {
                   src={imageUrl}
                   alt={`${project.title} preview`}
                   fill
-                  className="object-cover"
+                  className="object-cover bg-white"
                   priority
+                  onError={(e) => {
+                    // @ts-ignore: Object is possibly 'null'
+                    e.target.style.display = 'none';
+                  }}
                 />
               </motion.div>
               <AnimatePresence>
