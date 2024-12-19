@@ -55,7 +55,7 @@ export function ProjectHero({ project }: ProjectHeroProps) {
                   className="object-cover bg-white"
                   priority
                   onError={(e) => {
-                    // @ts-ignore: Object is possibly 'null'
+                    // @ts-expect-error: Object is possibly 'null'
                     e.target.style.display = 'none';
                   }}
                 />
