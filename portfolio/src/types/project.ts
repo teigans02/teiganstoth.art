@@ -7,6 +7,7 @@ export interface ProjectMetadata {
   tags: string[]
   published: boolean
   slug: string
+  workInProgress?: boolean
 }
 
 export interface Project extends ProjectMetadata {

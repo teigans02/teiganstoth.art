@@ -38,6 +38,11 @@ export function ProjectHero({ project }: ProjectHeroProps) {
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
             >
+              {project.workInProgress && (
+                <div className="absolute top-4 left-4 z-10 bg-black text-[#F8F8EF] rounded-full px-3 py-1 text-sm">
+                  Work in Progress
+                </div>
+              )}
               <motion.div
                 className="absolute inset-0"
                 animate={{
