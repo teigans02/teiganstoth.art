@@ -2,7 +2,7 @@ import Header from "@/components/header";
 
 export default function About() {
   return (
-    <div className="min-h-screen bg-[#F8F8EF]">
+    <div className="min-h-screen bg-white">
       <Header />
       <main className="max-w-3xl mx-auto py-8 md:py-12 px-6 md:px-8">
         <h2 className="text-2xl md:text-3xl mb-4 md:mb-6 font-['StyreneA-Regular']">About Me</h2>

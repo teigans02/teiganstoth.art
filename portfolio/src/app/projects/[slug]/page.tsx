@@ -43,7 +43,7 @@ export default async function ProjectPage({ params }: Props) {
   const { content } = matter(fileContent)
 
   return (
-    <div className="min-h-screen bg-[#F8F8EF]">
+    <div className="min-h-screen bg-white">
       <div className="hidden md:block">
         <Header />
       </div>
