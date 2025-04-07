@@ -19,7 +19,7 @@ export default async function ProjectsPage() {
   return (
     <div className="bg-white min-h-screen min-w-screen">
       <Header/>
-      <main className="px-6 md:px-12 pt-6">
+      <main className="px-6 md:px-12 pt-4 md:pt-6">
         <div className="max-w-5xl mx-auto">
           <div className="max-w-3xl">
           <ShortDescription />
