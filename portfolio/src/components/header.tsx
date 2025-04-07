@@ -2,10 +2,10 @@ import Link from 'next/link';
 
 export default function Header() {
   return (
-    <header className="w-full border-b border-black py-6 px-8 bg-[#F8F8EF] md:sticky md:top-0 z-20">
+    <header className="w-full py-6 px-6 md:px-12 bg-white md:sticky md:top-0 z-20">
       <div className="flex justify-between items-center">
-        <Link href="/" className="text-4xl font-['StyreneA-Regular'] hover:opacity-80">
-          Teigan Stothart
+        <Link href="/" className="text-2xl font-medium hover:opacity-80 tracking-tight">
+          TEIGAN STOTHART
         </Link>
         <nav className="space-x-6">
           <Link 
