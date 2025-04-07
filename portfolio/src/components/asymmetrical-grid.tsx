@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 
@@ -23,27 +23,10 @@ const ArrowRightIcon = () => (
 );
 
 const AsymmetricalGrid: React.FC<AsymmetricalGridProps> = ({ projects }) => {
-  // Split projects into two columns for desktop view
   const leftColumnProjects = projects.filter((_, index) => index % 2 === 0);
   const rightColumnProjects = projects.filter((_, index) => index % 2 === 1);
   const [hoveredProject, setHoveredProject] = useState<string | null>(null);
-  const [isMobile, setIsMobile] = useState(false);
   
-  useEffect(() => {
-    const checkIfMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    
-    // Initial check
-    checkIfMobile();
-    
-    // Add event listener for window resize
-    window.addEventListener('resize', checkIfMobile);
-    
-    // Cleanup
-    return () => window.removeEventListener('resize', checkIfMobile);
-  }, []);
-
   // Render a single project card
   const renderProject = (project: Project) => (
     <Link 
@@ -70,7 +53,7 @@ const AsymmetricalGrid: React.FC<AsymmetricalGridProps> = ({ projects }) => {
           />
         </motion.div>
         <AnimatePresence>
-          {(hoveredProject === project.id || isMobile) && (
+          {(hoveredProject === project.id || true) && (
             <motion.div
               initial={{ x: 100, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
@@ -113,28 +96,20 @@ const AsymmetricalGrid: React.FC<AsymmetricalGridProps> = ({ projects }) => {
     </Link>
   );
 
-  // For mobile: single column layout
-  if (isMobile) {
-    return (
-      <div className="container mx-auto py-8">
-        <div className="grid grid-cols-1 gap-16">
+  return (
+    <div className="container mx-auto py-8 md:py-12">
+      {/* Single column for sm, two columns for md+ */}
+      <div className="sm:grid-cols-1 md:grid-cols-12 grid gap-16 md:gap-12">
+        {/* For small screens: all projects in a single column */}
+        <div className="sm:block md:hidden col-span-full space-y-16">
           {projects.map(renderProject)}
         </div>
-      </div>
-    );
-  }
-
-  // For desktop: asymmetrical two-column layout
-  return (
-    <div className="container mx-auto py-12">
-      <div className="grid grid-cols-12 gap-12">
-        {/* Left column */}
-        <div className="col-span-6 space-y-24">
+        
+        {/* For medium screens and up: asymmetrical two-column layout */}
+        <div className="hidden md:block col-span-6 space-y-24">
           {leftColumnProjects.map(renderProject)}
         </div>
-
-        {/* Right column */}
-        <div className="col-span-6 space-y-24 mt-20">
+        <div className="hidden md:block col-span-6 space-y-24 mt-20">
           {rightColumnProjects.map(renderProject)}
         </div>
       </div>
