@@ -17,6 +17,20 @@ const ImageGrid = ({ images }: { images: string[] }) => {
   )
 }
 
+const FigmaEmbed = ({ url }: { url: string }) => {
+  return (
+    <div className="w-full flex justify-center mb-8">
+      <iframe 
+        style={{ border: "1px solid rgba(0, 0, 0, 0.1)" }}
+        width="800"
+        height="450"
+        src={url}
+        allowFullScreen
+      />
+    </div>
+  )
+}
+
 type Params = Promise<{ slug: string }>;
 
 interface Props {
@@ -55,6 +69,7 @@ export default async function ProjectPage({ params }: Props) {
               source={content}
               components={{
                 ImageGrid,
+                FigmaEmbed,
               }}
             />
           </article>
