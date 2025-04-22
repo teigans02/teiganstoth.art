@@ -14,6 +14,7 @@ export default {
       },
       fontFamily: {
         styrene: ['StyreneA-Regular', 'sans-serif'],
+        instrument: ['Instrument-Serif', 'serif'],
       },
       typography: {
         DEFAULT: {
