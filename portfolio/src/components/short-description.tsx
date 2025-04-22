@@ -1,9 +1,9 @@
 export default function ShortDescription() {
   return (
     <div
-      className="text-lg md:text-xl font-medium w-full"
+      className="text-2xl md:text-4xl font-medium w-full font-instrument text-center"
       >
-    MSc Marketing and Consumer Behaviour graduate with background in psychology. Bridging the gap between human behaviour, creativity, and digital innovation. Exploring strategic brand development through a consumer-centric lens.
+        I'm Teigan, a Marketing grad leveraging psychology to increase brand impact.
     </div>
   )
 }
