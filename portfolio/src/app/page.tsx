@@ -22,7 +22,7 @@ export default async function ProjectsPage() {
       <FollowCursor />
       <Header/>
       <main className="px-6 md:px-12 pt-4 md:pt-6">
-        <div className="max-w-xl mx-auto">
+        <div className="max-w-xl mx-auto py-8">
           <ShortDescription />
         </div>
         <div className="max-w-5xl mx-auto">
