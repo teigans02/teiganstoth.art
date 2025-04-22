@@ -43,28 +43,17 @@ export function ProjectHero({ project }: ProjectHeroProps) {
                   Work in Progress
                 </div>
               )}
-              <motion.div
-                className="absolute inset-0"
-                animate={{
-                  scale: isHovered ? 1.05 : 1
+              <Image
+                src={imageUrl}
+                alt={`${project.title} preview`}
+                fill
+                className="object-cover bg-white"
+                priority
+                onError={(e) => {
+                  // @ts-expect-error: Object is possibly 'null'
+                  e.target.style.display = 'none';
                 }}
-                transition={{
-                  duration: 0.4,
-                  ease: [0.4, 0, 0.2, 1]
-                }}
-              >
-                <Image
-                  src={imageUrl}
-                  alt={`${project.title} preview`}
-                  fill
-                  className="object-cover bg-white"
-                  priority
-                  onError={(e) => {
-                    // @ts-expect-error: Object is possibly 'null'
-                    e.target.style.display = 'none';
-                  }}
-                />
-              </motion.div>
+              />
               <AnimatePresence>
                 {(isHovered || isMobile) && (
                   <motion.div
