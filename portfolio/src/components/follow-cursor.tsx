@@ -2,13 +2,14 @@
 
 import React, { useEffect, useState } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
+import { ArrowRightIcon } from 'lucide-react';
 
 const FollowCursor: React.FC = () => {
   const [isHovering, setIsHovering] = useState(false);
   const mouseX = useMotionValue(-100);
   const mouseY = useMotionValue(-100);
 
-  const springConfig = { damping: 150, stiffness: 700, mass: 0.5 };
+  const springConfig = { damping: 100, stiffness: 700, mass: 0.5 };
   const smoothMouseX = useSpring(mouseX, springConfig);
   const smoothMouseY = useSpring(mouseY, springConfig);
 
@@ -56,7 +57,7 @@ const FollowCursor: React.FC = () => {
       // Animate scale and potentially opacity or other properties
       variants={{
         default: { scale: 0.7 },
-        hovering: { scale: 1.5 }, // Scale up when hovering
+        hovering: { scale: 1.1 }, // Scale up when hovering
       }}
       animate={isHovering ? "hovering" : "default"}
       transition={{ type: "spring", stiffness: 500, damping: 28 }}
@@ -69,7 +70,7 @@ const FollowCursor: React.FC = () => {
         left: 15, // Offset slightly right
         width: '30px', // Base width
         height: '30px', // Base height
-        backgroundColor: 'rgba(0, 0, 0, 0.1)',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
         backdropFilter: 'blur(10px)',
         WebkitBackdropFilter: 'blur(10px)',
         border: '1px solid rgba(255, 255, 255, 0.1)',
@@ -78,9 +79,15 @@ const FollowCursor: React.FC = () => {
         zIndex: 9999,
         // Ensure transform origin is center for scaling
         transformOrigin: 'center center',
-        // Remove transform: translate(-50%, -50%) if using top/left for offset
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
       }}
-    />
+    >
+      {isHovering && (
+        <ArrowRightIcon size={16} className="text-white" />
+      )}
+    </motion.div>
   );
 };
 

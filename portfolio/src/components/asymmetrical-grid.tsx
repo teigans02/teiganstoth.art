@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
+import Image from 'next/image';
 
 type Project = {
   id: string;
@@ -23,8 +24,9 @@ const ArrowRightIcon = () => (
 );
 
 const AsymmetricalGrid: React.FC<AsymmetricalGridProps> = ({ projects }) => {
-  const leftColumnProjects = projects.filter((_, index) => index % 2 === 0);
-  const rightColumnProjects = projects.filter((_, index) => index % 2 === 1);
+  const firstColumnProjects = projects.filter((_, index) => index % 3 === 0);
+  const secondColumnProjects = projects.filter((_, index) => index % 3 === 1);
+  const thirdColumnProjects = projects.filter((_, index) => index % 3 === 2);
   const [hoveredProject, setHoveredProject] = useState<string | null>(null);
   
   // Render a single project card
@@ -37,22 +39,14 @@ const AsymmetricalGrid: React.FC<AsymmetricalGridProps> = ({ projects }) => {
       onMouseLeave={() => setHoveredProject(null)}
     >
       <div className="relative w-full overflow-hidden mb-3">
-        <motion.div
-          animate={{
-            scale: hoveredProject === project.id ? 1.05 : 1
-          }}
-          transition={{
-            duration: 0.4,
-            ease: [0.4, 0, 0.2, 1]
-          }}
-        >
-          <img 
-            src={project.imageUrl} 
-            alt={project.title}
-            className="w-full h-auto"
-          />
-        </motion.div>
-        <AnimatePresence>
+        <Image 
+          src={project.imageUrl} 
+          alt={project.title}
+          width={800}
+          height={800}
+          className="w-full h-auto bg-white rounded-lg"
+        />
+        {/* <AnimatePresence>
           {(hoveredProject === project.id || true) && (
             <motion.div
               initial={{ x: 100, opacity: 0 }}
@@ -79,38 +73,41 @@ const AsymmetricalGrid: React.FC<AsymmetricalGridProps> = ({ projects }) => {
               </motion.div>
             </motion.div>
           )}
-        </AnimatePresence>
+        </AnimatePresence> */}
       </div>
-      <div className="flex justify-between items-start">
-        <h3 className="text-lg font-medium">{project.title}</h3>
-        <div className="flex flex-col items-end">
+      {/* <div className="flex flex-col justify-between items-start">
+        <h3 className="text-sm font-medium">{project.title}</h3>
+        <div className="flex flex-col items-start">
           {project.tags.map((tag, sIndex) => (
             <span key={`${project.id}-service-${sIndex}`} 
-                  className="text-sm text-gray-500 group-hover:text-black group-hover:font-medium duration-100 inline-block max-w-[200px] truncate"
+                  className="text-xs text-gray-500 inline-block"
             >
               {tag}
             </span>
           ))}
         </div>
-      </div>
+      </div> */}
     </Link>
   );
 
   return (
     <div className="container mx-auto py-8 md:py-12">
-      {/* Single column for sm, two columns for md+ */}
+      {/* Single column for sm, three columns for md+ */}
       <div className="sm:grid-cols-1 md:grid-cols-12 grid gap-16 md:gap-12">
         {/* For small screens: all projects in a single column */}
         <div className="sm:block md:hidden col-span-full space-y-16">
           {projects.map(renderProject)}
         </div>
         
-        {/* For medium screens and up: asymmetrical two-column layout */}
-        <div className="hidden md:block col-span-6 space-y-24">
-          {leftColumnProjects.map(renderProject)}
+        {/* For medium screens and up: asymmetrical three-column layout */}
+        <div className="hidden md:block col-span-4 space-y-12">
+          {firstColumnProjects.map(renderProject)}
         </div>
-        <div className="hidden md:block col-span-6 space-y-24 mt-20">
-          {rightColumnProjects.map(renderProject)}
+        <div className="hidden md:block col-span-4 space-y-12">
+          {secondColumnProjects.map(renderProject)}
+        </div>
+        <div className="hidden md:block col-span-4 space-y-12">
+          {thirdColumnProjects.map(renderProject)}
         </div>
       </div>
     </div>
