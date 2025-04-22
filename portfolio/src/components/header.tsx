@@ -4,8 +4,8 @@ export default function Header() {
   return (
     <header className="w-full py-6 px-6 md:px-12 bg-white md:sticky md:top-0 z-20">
       <div className="flex justify-between items-center">
-        <Link href="/" className="text-2xl font-medium hover:opacity-80 tracking-tight">
-          TEIGAN STOTHART
+        <Link href="/" className="text-lg hover:underline">
+          Teigan Stothart
         </Link>
         <nav className="space-x-6">
           <Link 
