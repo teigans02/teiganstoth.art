@@ -13,8 +13,11 @@ interface ProjectHeroProps {
 
 export function ProjectHero({ project }: ProjectHeroProps) {
   const imageUrl = `/images/${project.slug}/hero.jpg`
+  const imageUrl2 = `/images/${project.slug}/hero2.jpg`
   const [isHovered, setIsHovered] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
+  const [hero1Error, setHero1Error] = useState(false);
+  const [hero2Error, setHero2Error] = useState(false);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -29,83 +32,68 @@ export function ProjectHero({ project }: ProjectHeroProps) {
 
   return (
     <Link href={`/projects/${project.slug}`} className="block">
-      <div className="w-full py-2 md:py-3">
-        <div className="px-8">
-          <div className="grid grid-cols-1 gap-3 md:gap-12 md:grid-cols-2 items-center">
-            {/* Image Section - Moved above content for mobile */}
-            <div 
-              className="relative aspect-[16/9] overflow-hidden rounded-lg md:order-2"
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseLeave={() => setIsHovered(false)}
-            >
-              {project.workInProgress && (
-                <div className="absolute top-4 left-4 z-10 bg-black text-[#F8F8EF] rounded-full px-3 py-1 text-sm">
-                  Work in Progress
-                </div>
-              )}
+      <div className="w-full space-y-4">
+        <h1 className="text-leading text-2xl font-medium">
+          {project.title}
+        </h1>
+
+        <div 
+          className={`relative grid grid-cols-5 gap-1 md:gap-2`}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          <div className="relative aspect-[4/3] overflow-hidden rounded-lg col-span-2">
+            {project.workInProgress && !hero1Error && (
+              <div className="absolute top-4 left-4 z-10 bg-black text-[#F8F8EF] rounded-full px-3 py-1 text-sm">
+                Work in Progress
+              </div>
+            )}
+            {!hero1Error ? (
               <Image
                 src={imageUrl}
                 alt={`${project.title} preview`}
                 fill
                 className="object-cover bg-white"
                 priority
-                onError={(e) => {
-                  // @ts-expect-error: Object is possibly 'null'
-                  e.target.style.display = 'none';
-                }}
+                onError={() => setHero1Error(true)}
               />
-              <AnimatePresence>
-                {(isHovered || isMobile) && (
-                  <motion.div
-                    initial={{ x: 100, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    exit={{ x: 100, opacity: 0 }}
-                    transition={{ 
-                      type: "spring",
-                      stiffness: 400,
-                      damping: 30
-                    }}
-                    className="absolute bottom-4 right-4 bg-black text-[#F8F8EF] rounded-full p-2 
-                      flex items-center justify-center"
-                  >
-                    <motion.div
-                      initial={{ x: -10 }}
-                      animate={{ x: 0 }}
-                      transition={{ 
-                        type: "spring",
-                        stiffness: 400,
-                        damping: 30
-                      }}
-                    >
-                      <ArrowRightIcon className="w-4 h-4" />
-                    </motion.div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-
-            {/* Content Section */}
-            <div className="space-y-4 md:order-1">
-              <h1 className="text-3xl font-['StyreneA-Regular']">
-                {project.title}
-              </h1>
-              <p className="text-md">
-                {project.description}
-              </p>
-              
-              {/* Tags */}
-              <div className="flex flex-wrap gap-2">
-                {project.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="px-3 py-1 text-sm rounded-full bg-black text-[#F8F8EF]"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </div>
+            ) : (
+              <div className="w-full h-full bg-gray-200 rounded-lg"></div>
+            )}
           </div>
+
+          {!hero2Error && (
+            <div className="relative aspect-[4/3] overflow-hidden rounded-lg col-span-2">
+              <Image
+                src={imageUrl2}
+                alt={`${project.title} secondary preview`}
+                fill
+                className="object-cover bg-white"
+                onError={() => setHero2Error(true)}
+              />
+            </div>
+          )}
+          
+          <div className="col-span-1 h-full rounded-lg bg-white flex items-center justify-start">
+             {/* <ArrowRightIcon className="w-12 h-12 text-gray-500 font-regular p-4 bg-gray-100 rounded-full ml-4" /> */}
+          </div>
+        </div>
+
+        <div className="space-y-4 pt-2">
+          <p className="text-md">
+            {project.description}
+          </p>
+          
+          {/* <div className="flex flex-wrap gap-2">
+            {project.tags.map((tag) => (
+              <span
+                key={tag}
+                className="px-3 py-1 text-sm rounded-full bg-black text-[#F8F8EF]"
+              >
+                {tag}
+              </span>
+            ))}
+          </div> */}
         </div>
       </div>
     </Link>
