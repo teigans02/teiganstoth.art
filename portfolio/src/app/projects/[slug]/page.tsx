@@ -6,12 +6,13 @@ import { notFound } from "next/navigation"
 import fs from "fs"
 import path from "path"
 import matter from "gray-matter"
+import Image from "next/image"
 
 const ImageGrid = ({ images }: { images: string[] }) => {
   return (
     <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-4 -gap-y-4">
       {images.map((image, index) => (
-        <img key={index} src={image} alt={`Gallery Image ${index + 1}`} width="100%" />
+        <Image key={index} src={image} alt={`Gallery Image ${index + 1}`} width={1000} height={1000} />
       ))}
     </div>
   )
