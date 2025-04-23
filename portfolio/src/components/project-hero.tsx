@@ -38,11 +38,11 @@ export function ProjectHero({ project }: ProjectHeroProps) {
         </h1>
 
         <div 
-          className={`relative grid grid-cols-5 gap-1 md:gap-2`}
+          className={`relative grid md:grid-cols-5 grid-cols-1 gap-1 md:gap-2`}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
-          <div className="relative aspect-[4/3] overflow-hidden rounded-lg col-span-2">
+          <div className="relative aspect-[4/3] overflow-hidden rounded-lg md:col-span-2 col-span-1">
             {project.workInProgress && !hero1Error && (
               <div className="absolute top-4 left-4 z-10 bg-black text-[#F8F8EF] rounded-full px-3 py-1 text-sm">
                 Work in Progress
@@ -52,8 +52,9 @@ export function ProjectHero({ project }: ProjectHeroProps) {
               <Image
                 src={imageUrl}
                 alt={`${project.title} preview`}
-                fill
-                className="object-cover bg-white"
+                width={2000}
+                height={1500}
+                className="object-cover w-full h-full bg-white"
                 priority
                 onError={() => setHero1Error(true)}
               />
@@ -62,19 +63,20 @@ export function ProjectHero({ project }: ProjectHeroProps) {
             )}
           </div>
 
-          {!hero2Error && (
-            <div className="relative aspect-[4/3] overflow-hidden rounded-lg col-span-2">
+          {!hero2Error && !isMobile && (
+            <div className="relative aspect-[4/3] overflow-hidden rounded-lg md:col-span-2">
               <Image
                 src={imageUrl2}
                 alt={`${project.title} secondary preview`}
-                fill
-                className="object-cover bg-white"
+                width={2000}
+                height={1500}
+                className="object-cover w-full h-full bg-white"
                 onError={() => setHero2Error(true)}
               />
             </div>
           )}
           
-          <div className="col-span-1 h-full rounded-lg bg-white flex items-center justify-start">
+          <div className="hidden md:flex md:col-span-1 h-full rounded-lg bg-white items-center justify-start">
              {/* <ArrowRightIcon className="w-12 h-12 text-gray-500 font-regular p-4 bg-gray-100 rounded-full ml-4" /> */}
           </div>
         </div>

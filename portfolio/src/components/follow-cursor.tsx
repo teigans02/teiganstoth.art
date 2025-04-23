@@ -6,6 +6,7 @@ import { ArrowRightIcon } from 'lucide-react';
 
 const FollowCursor: React.FC = () => {
   const [isHovering, setIsHovering] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const mouseX = useMotionValue(-100);
   const mouseY = useMotionValue(-100);
 
@@ -14,6 +15,26 @@ const FollowCursor: React.FC = () => {
   const smoothMouseY = useSpring(mouseY, springConfig);
 
   useEffect(() => {
+    // Check if device is mobile
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    // Check initially
+    checkMobile();
+    
+    // Add resize listener to update when orientation changes
+    window.addEventListener('resize', checkMobile);
+    
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+    };
+  }, []);
+
+  useEffect(() => {
+    // Skip all event listeners on mobile
+    if (isMobile) return;
+    
     const handleMouseMove = (event: MouseEvent) => {
       mouseX.set(event.clientX);
       mouseY.set(event.clientY);
@@ -47,7 +68,10 @@ const FollowCursor: React.FC = () => {
       document.removeEventListener('mouseover', handleMouseOver);
       document.removeEventListener('mouseout', handleMouseOut);
     };
-  }, [mouseX, mouseY]);
+  }, [mouseX, mouseY, isMobile]);
+
+  // Don't render anything on mobile
+  if (isMobile) return null;
 
   const cursorSize = isHovering ? 60 : 30; // Larger size when hovering
   const offset = cursorSize / 2; // Calculate offset dynamically
