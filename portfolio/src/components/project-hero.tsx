@@ -2,9 +2,6 @@
 
 import { ProjectMetadata } from "@/types/project"
 import Image from "next/image"
-import { ArrowRightIcon } from "lucide-react"
-import { motion, AnimatePresence } from "framer-motion"
-import { useState, useEffect } from "react"
 import Link from "next/link"
 
 interface ProjectHeroProps {
@@ -12,19 +9,6 @@ interface ProjectHeroProps {
 }
 
 export function ProjectHero({ project }: ProjectHeroProps) {
-  const [isHovered, setIsHovered] = useState(false)
-  const [isMobile, setIsMobile] = useState(false)
-
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768)
-    }
-    
-    checkMobile()
-    window.addEventListener('resize', checkMobile)
-    
-    return () => window.removeEventListener('resize', checkMobile)
-  }, [])
 
   if (!project.heroImageUrl) {
     return <div className="w-full aspect-[4/3] bg-gray-200 rounded-lg">Missing Hero Image</div>;
@@ -36,15 +20,10 @@ export function ProjectHero({ project }: ProjectHeroProps) {
         <h1 className="text-leading text-2xl font-medium">
           {project.title}
         </h1>
-        {/* <p className="text-md">
-            {project.description}
-          </p> */}
 
         {/* Desktop Grid Layout */}
         <div
           className={`hidden md:grid md:grid-cols-5 gap-2`}
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
         >
           <div className="relative aspect-[4/3] overflow-hidden rounded-lg md:col-span-2">
             <Image
