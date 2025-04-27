@@ -8,6 +8,8 @@ export interface ProjectMetadata {
   published: boolean
   slug: string
   workInProgress?: boolean
+  heroImageUrl: string
+  hero2ImageUrl?: string | null
 }
 
 export interface Project extends ProjectMetadata {
