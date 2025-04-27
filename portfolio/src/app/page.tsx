@@ -1,8 +1,8 @@
-import AsymmetricalGrid from '@/components/asymmetrical-grid'
 import Header from '@/components/header'
 import ShortDescription from '@/components/short-description'
 import { getAllProjects } from '@/lib/mdx'
 import FollowCursor from '@/components/follow-cursor';
+import ProjectsDisplay from '@/components/projects-display';
 
 export default async function ProjectsPage() {
   const projects = await getAllProjects()
@@ -11,10 +11,15 @@ export default async function ProjectsPage() {
   const formattedProjects = publishedProjects.map(project => ({
     id: project.slug,
     title: project.title,
+    description: project.description,
     imageUrl: `/images/${project.slug}/hero.jpg`,
+    slug: project.slug,
     tags: project.tags || [],
-    featured: false,
-    slug: project.slug
+    date: project.date,
+    published: project.published,
+    workInProgress: project.workInProgress,
+    heroImageUrl: project.heroImageUrl,
+    hero2ImageUrl: project.hero2ImageUrl || undefined
   }))
 
   return (
@@ -26,7 +31,7 @@ export default async function ProjectsPage() {
           <ShortDescription />
         </div>
         <div className="max-w-5xl mx-auto">
-          <AsymmetricalGrid projects={formattedProjects} />
+          <ProjectsDisplay projects={formattedProjects} />
         </div>
       </main>
     </div>

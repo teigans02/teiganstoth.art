@@ -12,12 +12,8 @@ interface ProjectHeroProps {
 }
 
 export function ProjectHero({ project }: ProjectHeroProps) {
-  const imageUrl = `/images/${project.slug}/hero.jpg`
-  const imageUrl2 = `/images/${project.slug}/hero2.jpg`
   const [isHovered, setIsHovered] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
-  const [hero1Error, setHero1Error] = useState(false);
-  const [hero2Error, setHero2Error] = useState(false);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -29,6 +25,10 @@ export function ProjectHero({ project }: ProjectHeroProps) {
     
     return () => window.removeEventListener('resize', checkMobile)
   }, [])
+
+  if (!project.heroImageUrl) {
+    return <div className="w-full aspect-[4/3] bg-gray-200 rounded-lg">Missing Hero Image</div>;
+  }
 
   return (
     <Link href={`/projects/${project.slug}`} className="block">
@@ -43,35 +43,24 @@ export function ProjectHero({ project }: ProjectHeroProps) {
           onMouseLeave={() => setIsHovered(false)}
         >
           <div className="relative aspect-[4/3] overflow-hidden rounded-lg md:col-span-2 col-span-1">
-            {project.workInProgress && !hero1Error && (
-              <div className="absolute top-4 left-4 z-10 bg-black text-[#F8F8EF] rounded-full px-3 py-1 text-sm">
-                Work in Progress
-              </div>
-            )}
-            {!hero1Error ? (
-              <Image
-                src={imageUrl}
-                alt={`${project.title} preview`}
-                width={2000}
-                height={1500}
-                className="object-cover w-full h-full bg-white"
-                priority
-                onError={() => setHero1Error(true)}
-              />
-            ) : (
-              <div className="w-full h-full bg-gray-200 rounded-lg"></div>
-            )}
+            <Image
+              src={project.heroImageUrl}
+              alt={`${project.title} preview`}
+              width={2000}
+              height={1500}
+              className="object-cover w-full h-full bg-white"
+              priority
+            />
           </div>
 
-          {!hero2Error && !isMobile && (
+          {project.hero2ImageUrl && !isMobile && (
             <div className="relative aspect-[4/3] overflow-hidden rounded-lg md:col-span-2">
               <Image
-                src={imageUrl2}
+                src={project.hero2ImageUrl}
                 alt={`${project.title} secondary preview`}
                 width={2000}
                 height={1500}
                 className="object-cover w-full h-full bg-white"
-                onError={() => setHero2Error(true)}
               />
             </div>
           )}
