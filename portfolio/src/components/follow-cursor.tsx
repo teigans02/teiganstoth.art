@@ -51,7 +51,7 @@ const FollowCursor: React.FC = () => {
 
     // We use mouseout instead of mouseleave to better handle nested elements
     const handleMouseOut = (event: MouseEvent) => {
-       const target = event.target as Element;
+      //  const target = event.target as Element;
        // Check if the mouse is still over a hoverable element even after moving out of the current one
        const relatedTarget = event.relatedTarget as Element;
         if (!relatedTarget || !relatedTarget.closest('a, button, [role="button"], input, textarea, select')) {
@@ -73,8 +73,8 @@ const FollowCursor: React.FC = () => {
   // Don't render anything on mobile
   if (isMobile) return null;
 
-  const cursorSize = isHovering ? 60 : 30; // Larger size when hovering
-  const offset = cursorSize / 2; // Calculate offset dynamically
+  // const cursorSize = isHovering ? 60 : 30; // Larger size when hovering
+  // const offset = cursorSize / 2; // Calculate offset dynamically
 
   return (
     <motion.div
