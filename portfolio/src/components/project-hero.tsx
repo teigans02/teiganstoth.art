@@ -36,13 +36,17 @@ export function ProjectHero({ project }: ProjectHeroProps) {
         <h1 className="text-leading text-2xl font-medium">
           {project.title}
         </h1>
+        {/* <p className="text-md">
+            {project.description}
+          </p> */}
 
-        <div 
-          className={`relative grid md:grid-cols-5 grid-cols-1 gap-1 md:gap-2`}
+        {/* Desktop Grid Layout */}
+        <div
+          className={`hidden md:grid md:grid-cols-5 gap-2`}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
-          <div className="relative aspect-[4/3] overflow-hidden rounded-lg md:col-span-2 col-span-1">
+          <div className="relative aspect-[4/3] overflow-hidden rounded-lg md:col-span-2">
             <Image
               src={project.heroImageUrl}
               alt={`${project.title} preview`}
@@ -52,8 +56,7 @@ export function ProjectHero({ project }: ProjectHeroProps) {
               priority
             />
           </div>
-
-          {project.hero2ImageUrl && !isMobile && (
+          {project.hero2ImageUrl && (
             <div className="relative aspect-[4/3] overflow-hidden rounded-lg md:col-span-2">
               <Image
                 src={project.hero2ImageUrl}
@@ -64,28 +67,32 @@ export function ProjectHero({ project }: ProjectHeroProps) {
               />
             </div>
           )}
-          
-          <div className="hidden md:flex md:col-span-1 h-full rounded-lg bg-white items-center justify-start">
-             {/* <ArrowRightIcon className="w-12 h-12 text-gray-500 font-regular p-4 bg-gray-100 rounded-full ml-4" /> */}
-          </div>
         </div>
 
-        <div className="space-y-4 pt-2">
-          <p className="text-md">
-            {project.description}
-          </p>
-          
-          {/* <div className="flex flex-wrap gap-2">
-            {project.tags.map((tag) => (
-              <span
-                key={tag}
-                className="px-3 py-1 text-sm rounded-full bg-black text-[#F8F8EF]"
-              >
-                {tag}
-              </span>
-            ))}
-          </div> */}
-        </div>
+        {/* Mobile Horizontal Scroll Layout */}
+        <div className="md:hidden w-full overflow-x-auto whitespace-nowrap space-x-2 pb-2 rounded-lg">
+           <div className="relative aspect-[4/3] overflow-hidden rounded-lg inline-block w-[200px]">
+             <Image
+               src={project.heroImageUrl}
+               alt={`${project.title} preview`}
+               width={2000}
+               height={1500}
+               className="object-cover w-full h-full bg-white"
+               priority
+             />
+           </div>
+           {project.hero2ImageUrl && (
+             <div className="relative aspect-[4/3] overflow-hidden rounded-lg inline-block w-[200px]">
+               <Image
+                 src={project.hero2ImageUrl}
+                 alt={`${project.title} secondary preview`}
+                 width={2000}
+                 height={1500}
+                 className="object-cover w-full h-full bg-white"
+               />
+             </div>
+           )}
+         </div>
       </div>
     </Link>
   )
