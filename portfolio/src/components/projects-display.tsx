@@ -128,7 +128,7 @@ interface ProjectListProps {
 const ProjectList: React.FC<ProjectListProps> = ({ projects }) => {
   return (
     <>
-      <h3 className="text-leading text-2xl font-medium mt-24">Selected Projects. <span className="text-gray-500">Explore some of my recent projects in brand strategy and digital marketing.</span></h3>
+      <h3 className="text-leading text-2xl font-medium mt-24">Selected Projects. <span className="text-gray-500">Explore some of my recent work in Social Growth, Brand Strategy and Digital Marketing.</span></h3>
       {projects.map((project) => (
         <div key={project.id}>
            <div className="divider border-t border-gray-200 my-8"></div>

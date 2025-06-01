@@ -19,7 +19,8 @@ export default async function ProjectsPage() {
     published: project.published,
     workInProgress: project.workInProgress,
     heroImageUrl: project.heroImageUrl,
-    hero2ImageUrl: project.hero2ImageUrl || undefined
+    hero2ImageUrl: project.hero2ImageUrl || undefined,
+    externalUrl: project.externalUrl
   }))
 
   return (
