@@ -14,11 +14,29 @@ export function ProjectHero({ project }: ProjectHeroProps) {
     return <div className="w-full aspect-[4/3] bg-gray-200 rounded-lg">Missing Hero Image</div>;
   }
 
+  const LinkWrapper = ({ children }: { children: React.ReactNode }) => {
+    if (project.externalUrl) {
+      return (
+        <a href={project.externalUrl} target="_blank" rel="noopener noreferrer" className="block">
+          {children}
+        </a>
+      );
+    }
+    return (
+      <Link href={`/projects/${project.slug}`} className="block">
+        {children}
+      </Link>
+    );
+  };
+
   return (
-    <Link href={`/projects/${project.slug}`} className="block">
+    <LinkWrapper>
       <div className="w-full space-y-4">
         <h1 className="text-leading text-2xl font-medium">
           {project.title}
+        </h1>
+        <h1 className="text-leading text-2xl font-medium text-gray-500">
+          {project.description}
         </h1>
 
         {/* Desktop Grid Layout */}
@@ -73,6 +91,6 @@ export function ProjectHero({ project }: ProjectHeroProps) {
            )}
          </div>
       </div>
-    </Link>
+    </LinkWrapper>
   )
 }

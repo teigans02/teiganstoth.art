@@ -10,6 +10,7 @@ export interface ProjectMetadata {
   workInProgress?: boolean
   heroImageUrl: string
   hero2ImageUrl?: string | null
+  externalUrl?: string
 }
 
 export interface Project extends ProjectMetadata {
