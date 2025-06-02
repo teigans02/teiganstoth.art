@@ -8,6 +8,28 @@ import path from "path"
 import matter from "gray-matter"
 import Image from "next/image"
 
+export const dynamic = 'force-static'
+
+export async function generateMetadata({ params }: Props) {
+  const { slug } = await params
+  const filePath = path.join(process.cwd(), "src/projects", `${slug}.mdx`)
+  
+  if (!fs.existsSync(filePath)) {
+    return {
+      title: 'Not Found',
+      description: 'The page you are looking for does not exist.'
+    }
+  }
+
+  const fileContent = fs.readFileSync(filePath, "utf8")
+  const { data } = matter(fileContent)
+  
+  return {
+    title: data.title,
+    description: data.description,
+  }
+}
+
 const ImageGrid = ({ images }: { images: string[] }) => {
   return (
     <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-4 -gap-y-4">
