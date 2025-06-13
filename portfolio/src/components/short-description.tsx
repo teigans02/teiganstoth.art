@@ -31,7 +31,7 @@ export default function ShortDescription() {
           variants={itemVariants}
           className="text-4xl md:text-6xl font-medium w-full font-instrument text-center"
         >
-          <i className="text-gray-500">I&apos;m Teigan</i>, a Brand Strategist leveraging psychology to increase brand impact.
+          <i className="text-gray-500">I&apos;m Teigan</i>, a Marketing Strategist leveraging psychology to increase brand impact.
         </motion.div>
         <motion.p variants={itemVariants} className="text-md text-center font-medium text-gray-500 pt-2">Currently based in London, UK 🇬🇧</motion.p>
       </motion.div>
