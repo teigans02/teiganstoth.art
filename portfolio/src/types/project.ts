@@ -11,6 +11,7 @@ export interface ProjectMetadata {
   heroImageUrl: string
   hero2ImageUrl?: string | null
   externalUrl?: string
+  carouselPriority?: boolean
 }
 
 export interface Project extends ProjectMetadata {
