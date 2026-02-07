@@ -20,7 +20,8 @@ export default async function ProjectsPage() {
     workInProgress: project.workInProgress,
     heroImageUrl: project.heroImageUrl,
     hero2ImageUrl: project.hero2ImageUrl || undefined,
-    externalUrl: project.externalUrl
+    externalUrl: project.externalUrl,
+    carouselPriority: project.carouselPriority
   }))
 
   return (
