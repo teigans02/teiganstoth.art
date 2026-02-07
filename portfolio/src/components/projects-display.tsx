@@ -17,6 +17,7 @@ type Project = {
   workInProgress?: boolean;
   heroImageUrl: string;
   hero2ImageUrl?: string;
+  carouselPriority?: boolean;
 };
 
 interface ProjectCarouselProps {
@@ -141,10 +142,29 @@ const ProjectList: React.FC<ProjectListProps> = ({ projects }) => {
 
 // Main component that combines both
 const ProjectsDisplay: React.FC<{projects: Project[]}> = ({ projects }) => {
+  // Sort projects for carousel: priority=true first (by date), then priority=false/undefined (by date)
+  const carouselProjects = [...projects].sort((a, b) => {
+    const aPriority = a.carouselPriority === true;
+    const bPriority = b.carouselPriority === true;
+    
+    // If both have same priority status, sort by date (most recent first)
+    if (aPriority === bPriority) {
+      return new Date(b.date).getTime() - new Date(a.date).getTime();
+    }
+    
+    // Priority projects come first
+    return aPriority ? -1 : 1;
+  });
+
+  // List projects remain sorted by date (most recent first)
+  const listProjects = [...projects].sort((a, b) => 
+    new Date(b.date).getTime() - new Date(a.date).getTime()
+  );
+
   return (
     <div className="container mx-auto py-8 md:py-12">
-      <ProjectCarousel projects={projects} />
-      <ProjectList projects={projects} />
+      <ProjectCarousel projects={carouselProjects} />
+      <ProjectList projects={listProjects} />
     </div>
   );
 };
