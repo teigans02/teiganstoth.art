@@ -7,7 +7,6 @@ import fs from "fs"
 import path from "path"
 import matter from "gray-matter"
 import Image from "next/image"
-import { twMerge } from "tailwind-merge"
 
 export const dynamic = 'force-static'
 
@@ -37,14 +36,6 @@ const ImageGrid = ({ images }: { images: string[] }) => {
       {images.map((image, index) => (
         <Image key={index} src={image} alt={`Gallery Image ${index + 1}`} width={1000} height={1000} />
       ))}
-    </div>
-  )
-}
-
-const SingleImage = ({ src, alt }: { src: string; alt?: string }) => {
-  return (
-    <div className={twMerge("w-full my-4", "px-4 md:px-8 lg:px-16")}>
-      <Image src={src} alt={alt || "Project image"} width={1000} height={1000} className="rounded-lg" />
     </div>
   )
 }
@@ -101,7 +92,6 @@ export default async function ProjectPage({ params }: Props) {
               source={content}
               components={{
                 ImageGrid,
-                SingleImage,
                 FigmaEmbed,
               }}
             />
