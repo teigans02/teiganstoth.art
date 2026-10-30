@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 export default function Header() {
   return (
-    <header className="w-full py-6 px-6 md:px-12 bg-white md:sticky md:top-0 z-20">
+    <header className="w-full pt-[calc(1.5rem+env(safe-area-inset-top,0px))] pb-6 px-6 md:px-12 bg-white md:sticky md:top-0 z-20">
       <div className="flex justify-between items-center">
         <Link href="/" className="text-lg">
           Teigan Stothart

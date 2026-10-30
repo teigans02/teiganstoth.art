@@ -6,7 +6,7 @@ import { ArrowRightIcon } from 'lucide-react';
 
 const FollowCursor: React.FC = () => {
   const [isHovering, setIsHovering] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  const [canHover, setCanHover] = useState(false);
   const mouseX = useMotionValue(-100);
   const mouseY = useMotionValue(-100);
 
@@ -15,25 +15,15 @@ const FollowCursor: React.FC = () => {
   const smoothMouseY = useSpring(mouseY, springConfig);
 
   useEffect(() => {
-    // Check if device is mobile
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-    
-    // Check initially
-    checkMobile();
-    
-    // Add resize listener to update when orientation changes
-    window.addEventListener('resize', checkMobile);
-    
-    return () => {
-      window.removeEventListener('resize', checkMobile);
-    };
+    const media = window.matchMedia('(hover: hover) and (pointer: fine)');
+    const update = () => setCanHover(media.matches);
+    update();
+    media.addEventListener('change', update);
+    return () => media.removeEventListener('change', update);
   }, []);
 
   useEffect(() => {
-    // Skip all event listeners on mobile
-    if (isMobile) return;
+    if (!canHover) return;
     
     const handleMouseMove = (event: MouseEvent) => {
       mouseX.set(event.clientX);
@@ -49,10 +39,7 @@ const FollowCursor: React.FC = () => {
       }
     };
 
-    // We use mouseout instead of mouseleave to better handle nested elements
     const handleMouseOut = (event: MouseEvent) => {
-      //  const target = event.target as Element;
-       // Check if the mouse is still over a hoverable element even after moving out of the current one
        const relatedTarget = event.relatedTarget as Element;
         if (!relatedTarget || !relatedTarget.closest('a, button, [role="button"], input, textarea, select')) {
             setIsHovering(false);
@@ -61,27 +48,22 @@ const FollowCursor: React.FC = () => {
 
     window.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('mouseover', handleMouseOver);
-    document.addEventListener('mouseout', handleMouseOut); // Listen on document for broader capture
+    document.addEventListener('mouseout', handleMouseOut);
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseover', handleMouseOver);
       document.removeEventListener('mouseout', handleMouseOut);
     };
-  }, [mouseX, mouseY, isMobile]);
+  }, [mouseX, mouseY, canHover]);
 
-  // Don't render anything on mobile
-  if (isMobile) return null;
-
-  // const cursorSize = isHovering ? 60 : 30; // Larger size when hovering
-  // const offset = cursorSize / 2; // Calculate offset dynamically
+  if (!canHover) return null;
 
   return (
     <motion.div
-      // Animate scale and potentially opacity or other properties
       variants={{
         default: { scale: 0.7 },
-        hovering: { scale: 1.1 }, // Scale up when hovering
+        hovering: { scale: 1.1 },
       }}
       animate={isHovering ? "hovering" : "default"}
       transition={{ type: "spring", stiffness: 500, damping: 28 }}
@@ -89,11 +71,10 @@ const FollowCursor: React.FC = () => {
         translateX: smoothMouseX,
         translateY: smoothMouseY,
         position: 'fixed',
-        // Adjust offset slightly down and right from the pointer
-        top: 15, // Offset slightly down
-        left: 15, // Offset slightly right
-        width: '30px', // Base width
-        height: '30px', // Base height
+        top: 15,
+        left: 15,
+        width: '30px',
+        height: '30px',
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
         backdropFilter: 'blur(10px)',
         WebkitBackdropFilter: 'blur(10px)',
@@ -101,7 +82,6 @@ const FollowCursor: React.FC = () => {
         borderRadius: '50%',
         pointerEvents: 'none',
         zIndex: 9999,
-        // Ensure transform origin is center for scaling
         transformOrigin: 'center center',
         display: 'flex',
         alignItems: 'center',

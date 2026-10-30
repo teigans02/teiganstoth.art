@@ -25,10 +25,10 @@ export default async function ProjectsPage() {
   }))
 
   return (
-    <div className="bg-white min-h-screen min-w-screen">
+    <div className="bg-white min-h-[100svh] min-w-screen">
       <FollowCursor />
       <Header/>
-      <main className="px-6 md:px-12 pt-4 md:pt-6">
+      <main className="px-6 md:px-12 pt-4 md:pt-6 pb-[env(safe-area-inset-bottom,0px)]">
         <div className="max-w-3xl mx-auto py-4 md:py-8">
           <ShortDescription />
         </div>

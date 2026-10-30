@@ -67,8 +67,8 @@ export function ProjectHero({ project }: ProjectHeroProps) {
         </div>
 
         {/* Mobile Horizontal Scroll Layout */}
-        <div className="md:hidden w-full overflow-x-auto whitespace-nowrap space-x-2 pb-2 rounded-lg">
-           <div className="relative aspect-[4/3] overflow-hidden rounded-lg inline-block w-[200px]">
+        <div className="md:hidden w-full overflow-x-auto whitespace-nowrap space-x-2 pb-2 rounded-lg snap-x snap-mandatory">
+           <div className="relative aspect-[4/3] overflow-hidden rounded-lg inline-block w-[200px] snap-start">
              <Image
                src={project.heroImageUrl}
                alt={`${project.title} preview`}
@@ -79,7 +79,7 @@ export function ProjectHero({ project }: ProjectHeroProps) {
              />
            </div>
            {project.hero2ImageUrl && (
-             <div className="relative aspect-[4/3] overflow-hidden rounded-lg inline-block w-[200px]">
+             <div className="relative aspect-[4/3] overflow-hidden rounded-lg inline-block w-[200px] snap-start">
                <Image
                  src={project.hero2ImageUrl}
                  alt={`${project.title} secondary preview`}

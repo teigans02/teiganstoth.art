@@ -9,7 +9,7 @@ export function BackButton() {
   return (
     <button
       onClick={() => router.back()}
-      className="flex items-center gap-1 p-2 text-black"
+      className="flex items-center gap-1 p-2 text-black active:scale-[0.97] transition-transform duration-100 ease-out"
     >
       <ChevronLeft size={24} />
       <span className="text-lg">Back</span>

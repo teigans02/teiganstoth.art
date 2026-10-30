@@ -80,11 +80,11 @@ export default async function ProjectPage({ params }: Props) {
   const { content } = matter(fileContent)
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-[100svh] bg-white pb-[env(safe-area-inset-bottom,0px)]">
       <div className="hidden md:block">
         <Header />
       </div>
-      <div className="p-8">
+      <div className="p-8 pt-[max(2rem,env(safe-area-inset-top,0px))] md:pt-8">
         <div className="max-w-3xl mx-auto">
           <BackButton />
           <article className="mt-8 prose prose-md prose-headings:font-styrene prose-img:rounded-lg max-w-none">
