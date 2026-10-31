@@ -1,5 +1,6 @@
 import { BackButton } from "@/components/back-button"
 import Header from "@/components/header"
+import { getLocalImageSize } from "@/lib/local-image-size"
 import { getAllProjects } from "@/lib/mdx"
 import { MDXRemote } from "next-mdx-remote/rsc"
 import { notFound } from "next/navigation"
@@ -33,10 +34,36 @@ export async function generateMetadata({ params }: Props) {
 const ImageGrid = ({ images }: { images: string[] }) => {
   return (
     <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-4 -gap-y-4">
-      {images.map((image, index) => (
-        <Image key={index} src={image} alt={`Gallery Image ${index + 1}`} width={1000} height={1000} />
-      ))}
+      {images.map((image, index) => {
+        const { width, height } = getLocalImageSize(image)
+        return (
+          <Image
+            key={index}
+            src={image}
+            alt={`Gallery Image ${index + 1}`}
+            width={width}
+            height={height}
+            sizes="(max-width: 640px) calc(50vw - 2.5rem), (max-width: 768px) calc(33vw - 2rem), 240px"
+            className="h-auto w-full"
+          />
+        )
+      })}
     </div>
+  )
+}
+
+const MdxImage = ({ src, alt }: { src?: string; alt?: string }) => {
+  if (!src) return null
+  const { width, height } = getLocalImageSize(src)
+  return (
+    <Image
+      src={src}
+      alt={alt ?? ""}
+      width={width}
+      height={height}
+      sizes="(max-width: 48rem) calc(100vw - 4rem), 48rem"
+      className="h-auto w-full rounded-lg"
+    />
   )
 }
 
@@ -93,6 +120,7 @@ export default async function ProjectPage({ params }: Props) {
               components={{
                 ImageGrid,
                 FigmaEmbed,
+                img: MdxImage,
               }}
             />
           </article>

@@ -2,16 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-  font-family: 'StyreneA-Regular';
-  src: url('/fonts/StyreneA-Regular.otf') format('opentype');
-}
-
-@font-face {
-  font-family: 'Instrument-Serif';
-  src: url('/fonts/Instrument-Serif.ttf') format('truetype');
-}
-
 :root {
   --background: #ffffff;
   --foreground: #171717;

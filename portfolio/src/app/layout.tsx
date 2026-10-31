@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -10,6 +11,20 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+
+const styrene = localFont({
+  src: "../../public/fonts/StyreneA-Regular.otf",
+  variable: "--font-styrene",
+  display: "swap",
+  adjustFontFallback: "Arial",
+});
+
+const instrument = localFont({
+  src: "../../public/fonts/Instrument-Serif.ttf",
+  variable: "--font-instrument",
+  display: "swap",
+  adjustFontFallback: "Times New Roman",
 });
 
 export const metadata: Metadata = {
@@ -32,10 +47,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="light">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased text-gray-900`}
-      >
+    <html
+      lang="en"
+      className={`light ${geistSans.variable} ${geistMono.variable} ${styrene.variable} ${instrument.variable}`}
+    >
+      <body className="antialiased text-gray-900">
         {children}
       </body>
     </html>
