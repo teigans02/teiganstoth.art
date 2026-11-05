@@ -28,8 +28,18 @@ const instrument = localFont({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://teiganstoth.art"),
   title: "Teigan Stothart",
-  description: "My Portfolio Site",
+  description: "Teigan Stothart is a London-based marketing strategist using consumer psychology and research to shape brands and campaigns. Her work spans DTC brands, paid media, and consumer research.",
+  openGraph: {
+    siteName: "Teigan Stothart",
+    type: "website",
+    images: [{ url: "/images/mighty/hero.jpg", width: 2000, height: 1500, alt: "Marketing and brand work for Mighty" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    images: ["/images/mighty/hero.jpg"],
+  },
 };
 
 export const viewport: Viewport = {

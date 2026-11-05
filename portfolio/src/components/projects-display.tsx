@@ -163,7 +163,12 @@ const ProjectsDisplay: React.FC<{projects: Project[]}> = ({ projects }) => {
 
   return (
     <div className="container mx-auto py-8 md:py-12">
-      <ProjectCarousel projects={carouselProjects} />
+      <ProjectCarousel projects={carouselProjects.flatMap(project => {
+        const primary = { ...project, imageUrl: project.heroImageUrl };
+        return project.slug === 'mighty' && project.hero2ImageUrl // Hacky, but not the end of the world.
+          ? [primary, { ...project, id: `${project.id}-hero2`, imageUrl: project.hero2ImageUrl }]
+          : [primary];
+      })} />
       <ProjectList projects={listProjects} />
     </div>
   );
