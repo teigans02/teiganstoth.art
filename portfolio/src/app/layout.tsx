@@ -30,7 +30,7 @@ const instrument = localFont({
 export const metadata: Metadata = {
   metadataBase: new URL("https://teiganstoth.art"),
   title: "Teigan Stothart",
-  description: "Teigan Stothart is a London-based marketing strategist using consumer psychology and research to shape brands and campaigns. Her work spans DTC brands, paid media, and consumer research.",
+  description: "Teigan Stothart is a London-based marketing strategist. Her experience spans DTC marketing, paid media, and consumer research.",
   openGraph: {
     siteName: "Teigan Stothart",
     type: "website",

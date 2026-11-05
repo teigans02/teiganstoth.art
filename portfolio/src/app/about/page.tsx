@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import Image from "next/image"
 import { getLocalImageSize } from "@/lib/local-image-size"
 
-const description = "Teigan Stothart is a London-based marketing strategist using consumer psychology and research to shape brands and campaigns. Her work spans DTC brands, paid media, and consumer research."
+const description = "Teigan Stothart is a London-based marketing strategist. Her experience spans DTC marketing, paid media, and consumer research."
 
 export const metadata: Metadata = {
   title: "About Teigan Stothart",
