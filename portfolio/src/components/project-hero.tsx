@@ -17,13 +17,13 @@ export function ProjectHero({ project }: ProjectHeroProps) {
   const LinkWrapper = ({ children }: { children: React.ReactNode }) => {
     if (project.externalUrl) {
       return (
-        <a href={project.externalUrl} target="_blank" rel="noopener noreferrer" className="block">
+        <a href={project.externalUrl} target="_blank" rel="noopener noreferrer" className="project-link block rounded-lg">
           {children}
         </a>
       );
     }
     return (
-      <Link href={`/projects/${project.slug}`} className="block">
+      <Link href={`/projects/${project.slug}`} className="project-link block rounded-lg">
         {children}
       </Link>
     );

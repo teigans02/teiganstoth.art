@@ -22,6 +22,31 @@ body {
   padding: 0;
 }
 
+.project-link {
+  transition: opacity 150ms ease-out;
+}
+
+.project-link:focus-visible {
+  outline: 2px solid var(--foreground);
+  outline-offset: 6px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .project-link:hover {
+    opacity: 0.85;
+  }
+}
+
+.project-link:active {
+  opacity: 0.75;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-link {
+    transition: none;
+  }
+}
+
 input,
 textarea,
 select {
