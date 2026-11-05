@@ -31,10 +31,10 @@ export async function generateMetadata({ params }: Props) {
   }
 }
 
-const ImageGrid = ({ images }: { images: string[] }) => {
+const ImageGrid = ({ images }: { images: string }) => {
   return (
     <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-4 -gap-y-4">
-      {images.map((image, index) => {
+      {images.split(" ").map((image, index) => {
         const { width, height } = getLocalImageSize(image)
         return (
           <Image
