@@ -45,23 +45,23 @@ export default function AboutPage() {
   const { width, height } = getLocalImageSize(imagePath)
 
   return (
-    <main className="mx-auto max-w-xl px-6 py-12 md:py-20">
+    <main className="mx-auto flex h-[100svh] max-w-xl flex-col justify-center px-6 pt-[max(1.5rem,env(safe-area-inset-top,0px))] pb-[max(1.5rem,env(safe-area-inset-bottom,0px))]">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
       />
-      <h1 className="mb-6 font-instrument text-4xl">{name}</h1>
+      <h1 className="mb-6 shrink-0 font-instrument text-4xl">{name}</h1>
       <Image
         src={imagePath}
         alt={name}
         width={width}
         height={height}
         sizes="(max-width: 576px) calc(100vw - 3rem), 528px"
-        className="h-auto w-full rounded-lg"
+        className="min-h-0 w-auto max-w-full self-start rounded-lg object-contain"
         priority
         unoptimized
       />
-      <p className="mt-6 text-lg leading-relaxed text-gray-700">{description}</p>
+      <p className="mt-6 shrink-0 text-lg leading-relaxed text-gray-700">{description}</p>
     </main>
   )
 }
