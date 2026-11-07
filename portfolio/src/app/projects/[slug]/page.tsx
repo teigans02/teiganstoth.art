@@ -1,4 +1,5 @@
 import { BackButton } from "@/components/back-button"
+import { HearstLogoGrid } from "@/components/hearst-logo-grid"
 import Header from "@/components/header"
 import { getLocalImageSize } from "@/lib/local-image-size"
 import { getAllProjects } from "@/lib/mdx"
@@ -143,6 +144,7 @@ export default async function ProjectPage({ params }: Props) {
               components={{
                 ImageGrid,
                 FigmaEmbed,
+                HearstLogoGrid,
                 img: MdxImage,
               }}
             />
