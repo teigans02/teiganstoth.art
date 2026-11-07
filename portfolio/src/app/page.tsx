@@ -12,7 +12,6 @@ export default async function ProjectsPage() {
     id: project.slug,
     title: project.title,
     description: project.description,
-    imageUrl: `/images/${project.slug}/hero.jpg`,
     slug: project.slug,
     tags: project.tags || [],
     date: project.date,
@@ -21,7 +20,6 @@ export default async function ProjectsPage() {
     heroImageUrl: project.heroImageUrl,
     hero2ImageUrl: project.hero2ImageUrl || undefined,
     externalUrl: project.externalUrl,
-    carouselPriority: project.carouselPriority
   }))
 
   return (

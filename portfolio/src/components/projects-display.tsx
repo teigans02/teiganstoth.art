@@ -4,11 +4,11 @@ import React, { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { ProjectHero } from './project-hero';
+import { getCarouselSlides, type CarouselSlide } from '@/lib/project-carousel';
 
 type Project = {
   id: string;
   title: string;
-  imageUrl: string;
   slug: string;
   tags: string[];
   description: string;
@@ -17,48 +17,47 @@ type Project = {
   workInProgress?: boolean;
   heroImageUrl: string;
   hero2ImageUrl?: string;
-  carouselPriority?: boolean;
 };
 
 interface ProjectCarouselProps {
-  projects: Project[];
+  slides: CarouselSlide[];
 }
 
-const ProjectCarousel: React.FC<ProjectCarouselProps> = ({ projects }) => {
+const ProjectCarousel: React.FC<ProjectCarouselProps> = ({ slides }) => {
   const [contentWidth, setContentWidth] = useState(0);
   const [containerWidth, setContainerWidth] = useState(0); // State for container width
   const motionRef = useRef<HTMLDivElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null); 
+  const containerRef = useRef<HTMLDivElement>(null);
 
   // Define the width of a single item (including margin)
   const itemWidth = 200 + 8; // 200px width + mr-2 (8px) margin
-  
+
   // Calculate repetitions based on measured container width
-  const numOriginalItems = projects.length;
+  const numOriginalItems = slides.length;
   const originalSetWidth = numOriginalItems * itemWidth;
-  
+
   // Ensure we have at least enough items to cover the measured width
   // Only calculate if containerWidth is measured and projects exist
   const repetitionsNeeded = containerWidth > 0 && numOriginalItems > 0
-    ? Math.max(1, Math.ceil(containerWidth / originalSetWidth)) 
+    ? Math.max(1, Math.ceil(containerWidth / originalSetWidth))
     : 1;
 
   // Create the base set by repeating the original projects
-  const baseSet = Array(repetitionsNeeded).fill(projects).flat();
-  
+  const baseSet = Array(repetitionsNeeded).fill(slides).flat();
+
   // Duplicate the extended base set for seamless infinite scroll
   const duplicatedProjects = [...baseSet, ...baseSet];
-  
-  const renderImage = (project: Project, index: number) => (
-      <div key={`${project.id}-${index}`} className="flex-shrink-0 w-[200px] relative overflow-hidden mr-2"> 
-        <Image 
-          src={project.imageUrl} 
-          alt={project.title}
+
+  const renderImage = (slide: CarouselSlide, index: number) => (
+      <div key={`${slide.id}-${index}`} className="flex-shrink-0 w-[200px] relative overflow-hidden mr-2">
+        <Image
+          src={slide.src}
+          alt={slide.alt}
           width={2000}
           height={1500}
           className="w-full h-full object-cover rounded-lg bg-gray-200" // Image remains rounded
           // Prioritize images based on estimated visible count
-          priority={containerWidth > 0 && index < Math.ceil(containerWidth / itemWidth)} 
+          priority={containerWidth > 0 && index < Math.ceil(containerWidth / itemWidth)}
         />
       </div>
   );
@@ -70,7 +69,7 @@ const ProjectCarousel: React.FC<ProjectCarouselProps> = ({ projects }) => {
         setContainerWidth(containerRef.current.offsetWidth);
       }
     };
-    
+
     measureContainer(); // Initial measure
     window.addEventListener('resize', measureContainer); // Measure on resize
 
@@ -83,7 +82,7 @@ const ProjectCarousel: React.FC<ProjectCarouselProps> = ({ projects }) => {
     // This needs to run *after* baseSet might have changed due to containerWidth update
     if (motionRef.current && baseSet.length > 0) {
       const totalWidth = motionRef.current.scrollWidth;
-      setContentWidth(totalWidth / 2); 
+      setContentWidth(totalWidth / 2);
     } else {
       setContentWidth(0); // Reset if no items/ref
     }
@@ -94,20 +93,20 @@ const ProjectCarousel: React.FC<ProjectCarouselProps> = ({ projects }) => {
   const animationVariants = contentWidth > 0 ? {
     x: [0, -contentWidth] // Animate by the width of the baseSet
   } : {
-    x: 0 
+    x: 0
   };
 
   return (
     // Remove fixed width, add w-full (or let parent handle), add rounded-lg
-    <div 
-      ref={containerRef} 
+    <div
+      ref={containerRef}
       className="w-full overflow-hidden rounded-lg" // Make container responsive and rounded
-    > 
+    >
       <motion.div
         ref={motionRef}
-        className="flex" 
+        className="flex"
         style={{ willChange: 'transform' }}
-        animate={animationVariants} 
+        animate={animationVariants}
         transition={{
           x: {
             duration: contentWidth > 0 ? contentWidth / 50 : 0, // Prevent duration 0 if width is 0
@@ -142,33 +141,16 @@ const ProjectList: React.FC<ProjectListProps> = ({ projects }) => {
 
 // Main component that combines both
 const ProjectsDisplay: React.FC<{projects: Project[]}> = ({ projects }) => {
-  // Sort projects for carousel: priority=true first (by date), then priority=false/undefined (by date)
-  const carouselProjects = [...projects].sort((a, b) => {
-    const aPriority = a.carouselPriority === true;
-    const bPriority = b.carouselPriority === true;
-    
-    // If both have same priority status, sort by date (most recent first)
-    if (aPriority === bPriority) {
-      return new Date(b.date).getTime() - new Date(a.date).getTime();
-    }
-    
-    // Priority projects come first
-    return aPriority ? -1 : 1;
-  });
+  const carouselSlides = getCarouselSlides(projects);
 
   // List projects remain sorted by date (most recent first)
-  const listProjects = [...projects].sort((a, b) => 
+  const listProjects = [...projects].sort((a, b) =>
     new Date(b.date).getTime() - new Date(a.date).getTime()
   );
 
   return (
     <div className="container mx-auto py-8 md:py-12">
-      <ProjectCarousel projects={carouselProjects.flatMap(project => {
-        const primary = { ...project, imageUrl: project.heroImageUrl };
-        return project.slug === 'mighty' && project.hero2ImageUrl // Hacky, but not the end of the world.
-          ? [primary, { ...project, id: `${project.id}-hero2`, imageUrl: project.hero2ImageUrl }]
-          : [primary];
-      })} />
+      <ProjectCarousel slides={carouselSlides} />
       <ProjectList projects={listProjects} />
     </div>
   );
