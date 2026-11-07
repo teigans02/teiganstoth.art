@@ -16,8 +16,10 @@ function getTargetKind(el: EventTarget | null): TargetKind | null {
   if (!target) return el.closest('[data-cursor="drag"]') ? 'drag' : null;
   if (
     target instanceof HTMLAnchorElement &&
+    target.hasAttribute('href') &&
     (target.target === '_blank' ||
-      (target.protocol.startsWith('http') && target.origin !== window.location.origin))
+      !target.protocol.startsWith('http') ||
+      target.origin !== window.location.origin)
   ) {
     return 'external';
   }
