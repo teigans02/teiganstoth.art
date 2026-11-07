@@ -1,49 +1,87 @@
 'use client'
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useSyncExternalStore } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
 import { ArrowRightIcon } from 'lucide-react';
 
+const INTERACTIVE = 'a, button, [role="button"], input, textarea, select';
+const FINE_POINTER = '(hover: hover) and (pointer: fine)';
+const SPRING_CONFIG = { damping: 100, stiffness: 700, mass: 0.5 };
+
+type TargetKind = 'internal' | 'external';
+
+function getTargetKind(el: EventTarget | null): TargetKind | null {
+  const target = el instanceof Element ? el.closest(INTERACTIVE) : null;
+  if (!target) return null;
+  if (
+    target instanceof HTMLAnchorElement &&
+    (target.target === '_blank' ||
+      (target.protocol.startsWith('http') && target.origin !== window.location.origin))
+  ) {
+    return 'external';
+  }
+  return 'internal';
+}
+
+function subscribeFinePointer(onChange: () => void) {
+  const media = window.matchMedia(FINE_POINTER);
+  media.addEventListener('change', onChange);
+  return () => media.removeEventListener('change', onChange);
+}
+
+function useFinePointer() {
+  return useSyncExternalStore(
+    subscribeFinePointer,
+    () => window.matchMedia(FINE_POINTER).matches,
+    () => false,
+  );
+}
+
 const FollowCursor: React.FC = () => {
-  const [isHovering, setIsHovering] = useState(false);
-  const [canHover, setCanHover] = useState(false);
+  const canHover = useFinePointer();
+  const [visible, setVisible] = useState(false);
+  const [hover, setHover] = useState<{ active: boolean; kind: TargetKind }>({
+    active: false,
+    kind: 'internal',
+  });
+
   const mouseX = useMotionValue(-100);
   const mouseY = useMotionValue(-100);
-
-  const springConfig = { damping: 100, stiffness: 700, mass: 0.5 };
-  const smoothMouseX = useSpring(mouseX, springConfig);
-  const smoothMouseY = useSpring(mouseY, springConfig);
-
-  useEffect(() => {
-    const media = window.matchMedia('(hover: hover) and (pointer: fine)');
-    const update = () => setCanHover(media.matches);
-    update();
-    media.addEventListener('change', update);
-    return () => media.removeEventListener('change', update);
-  }, []);
+  const smoothMouseX = useSpring(mouseX, SPRING_CONFIG);
+  const smoothMouseY = useSpring(mouseY, SPRING_CONFIG);
 
   useEffect(() => {
     if (!canHover) return;
-    
+    let hasMoved = false;
+
     const handleMouseMove = (event: MouseEvent) => {
+      if (!hasMoved) {
+        // Jump straight to the cursor on first appearance instead of springing in from off-screen
+        hasMoved = true;
+        smoothMouseX.jump(event.clientX);
+        smoothMouseY.jump(event.clientY);
+      }
       mouseX.set(event.clientX);
       mouseY.set(event.clientY);
+      setVisible(true);
     };
 
+    // mouseover fires for every element entered (including plain page areas),
+    // so it covers both entering and leaving interactive targets
     const handleMouseOver = (event: MouseEvent) => {
-      const target = event.target as Element;
-      if (target.closest('a, button, [role="button"], input, textarea, select')) {
-        setIsHovering(true);
-      } else {
-        setIsHovering(false);
-      }
+      const kind = getTargetKind(event.target);
+      setHover((prev) =>
+        kind
+          ? prev.active && prev.kind === kind ? prev : { active: true, kind }
+          : prev.active ? { ...prev, active: false } : prev,
+      );
     };
 
+    // Only needed for leaving the window, where no mouseover follows
     const handleMouseOut = (event: MouseEvent) => {
-       const relatedTarget = event.relatedTarget as Element;
-        if (!relatedTarget || !relatedTarget.closest('a, button, [role="button"], input, textarea, select')) {
-            setIsHovering(false);
-        }
+      if (event.relatedTarget) return;
+      setVisible(false);
+      setHover((prev) => (prev.active ? { ...prev, active: false } : prev));
     };
 
     window.addEventListener('mousemove', handleMouseMove);
@@ -55,18 +93,18 @@ const FollowCursor: React.FC = () => {
       document.removeEventListener('mouseover', handleMouseOver);
       document.removeEventListener('mouseout', handleMouseOut);
     };
-  }, [mouseX, mouseY, canHover]);
+  }, [canHover, mouseX, mouseY, smoothMouseX, smoothMouseY]);
 
   if (!canHover) return null;
 
   return (
     <motion.div
-      variants={{
-        default: { scale: 0.7 },
-        hovering: { scale: 1.1 },
+      initial={false}
+      animate={{
+        opacity: visible ? 1 : 0,
+        scale: hover.active ? 1.1 : 0.7,
       }}
-      animate={isHovering ? "hovering" : "default"}
-      transition={{ type: "spring", stiffness: 500, damping: 28 }}
+      transition={{ type: 'spring', stiffness: 500, damping: 28 }}
       style={{
         translateX: smoothMouseX,
         translateY: smoothMouseY,
@@ -88,9 +126,18 @@ const FollowCursor: React.FC = () => {
         justifyContent: 'center',
       }}
     >
-      {isHovering && (
+      <motion.div
+        initial={false}
+        animate={{
+          opacity: hover.active ? 1 : 0,
+          scale: hover.active ? 1 : 0.5,
+          rotate: hover.kind === 'external' ? -45 : 0,
+        }}
+        transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+        style={{ display: 'flex' }}
+      >
         <ArrowRightIcon size={16} className="text-white" />
-      )}
+      </motion.div>
     </motion.div>
   );
 };
