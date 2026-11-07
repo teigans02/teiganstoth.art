@@ -1,6 +1,8 @@
 import { BackButton } from "@/components/back-button"
 import { HearstLogoGrid } from "@/components/hearst-logo-grid"
 import Header from "@/components/header"
+import { RevealImage } from "@/components/reveal-image"
+import { getImageColor } from "@/lib/image-color"
 import { getLocalImageSize } from "@/lib/local-image-size"
 import { getAllProjects } from "@/lib/mdx"
 import { MDXRemote } from "next-mdx-remote/rsc"
@@ -8,7 +10,6 @@ import { notFound } from "next/navigation"
 import fs from "fs"
 import path from "path"
 import matter from "gray-matter"
-import Image from "next/image"
 import type { Metadata } from "next"
 
 export const dynamic = 'force-static'
@@ -55,20 +56,24 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-const ImageGrid = ({ images }: { images: string }) => {
+const ImageGrid = async ({ images }: { images: string }) => {
+  const sources = images.split(" ")
+  const colors = await Promise.all(sources.map(getImageColor))
   return (
     <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-4 -gap-y-4">
-      {images.split(" ").map((image, index) => {
+      {sources.map((image, index) => {
         const { width, height } = getLocalImageSize(image)
         return (
-          <Image
+          <RevealImage
             key={index}
             src={image}
             alt={`Gallery Image ${index + 1}`}
             width={width}
             height={height}
             sizes="(max-width: 640px) calc(50vw - 2.5rem), (max-width: 768px) calc(33vw - 2rem), 240px"
-            className="h-auto w-full"
+            placeholderColor={colors[index]}
+            wrapperClassName="my-[2em] overflow-hidden rounded-lg"
+            className="!my-0 h-auto w-full"
           />
         )
       })}
@@ -76,17 +81,19 @@ const ImageGrid = ({ images }: { images: string }) => {
   )
 }
 
-const MdxImage = ({ src, alt }: { src?: string; alt?: string }) => {
+const MdxImage = async ({ src, alt }: { src?: string; alt?: string }) => {
   if (!src) return null
   const { width, height } = getLocalImageSize(src)
   return (
-    <Image
+    <RevealImage
       src={src}
       alt={alt ?? ""}
       width={width}
       height={height}
       sizes="(max-width: 48rem) calc(100vw - 4rem), 48rem"
-      className="h-auto w-full rounded-lg"
+      placeholderColor={await getImageColor(src)}
+      wrapperClassName="my-[2em] overflow-hidden rounded-lg"
+      className="!my-0 h-auto w-full"
     />
   )
 }

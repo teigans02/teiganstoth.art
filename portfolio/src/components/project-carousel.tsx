@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useCallback, useEffect, useRef, useState } from 'react'
-import Image from 'next/image'
+import { RevealImage } from '@/components/reveal-image'
 import {
   motion,
   useAnimationFrame,
@@ -217,10 +217,10 @@ export function ProjectCarousel({ slides }: { slides: CarouselSlide[] }) {
               <div
                 key={`${copyIndex}-${slide.id}`}
                 aria-hidden={!isOriginalCopy || undefined}
-                className="flex-shrink-0 overflow-hidden"
+                className="flex-shrink-0"
                 style={{ width: SLIDE_WIDTH, marginRight: SLIDE_GAP }}
               >
-                <Image
+                <RevealImage
                   src={slide.src}
                   alt={isOriginalCopy ? slide.alt : ''}
                   width={2000}
@@ -228,7 +228,10 @@ export function ProjectCarousel({ slides }: { slides: CarouselSlide[] }) {
                   sizes={`${SLIDE_WIDTH}px`}
                   draggable={false}
                   priority={isOriginalCopy && slideIndex < 5}
-                  className="w-full aspect-[4/3] object-cover rounded-lg bg-gray-200 pointer-events-none"
+                  loading="eager"
+                  placeholderColor={slide.color}
+                  wrapperClassName="overflow-hidden rounded-lg"
+                  className="w-full aspect-[4/3] object-cover pointer-events-none"
                 />
               </div>
             )

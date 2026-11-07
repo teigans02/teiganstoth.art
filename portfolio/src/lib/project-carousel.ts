@@ -4,9 +4,9 @@ export interface CarouselSlide {
   id: string
   src: string
   alt: string
+  color?: string
 }
 
-// Featured images appear in this order; other projects follow by date.
 const featuredImages: { slug: string; image: "heroImageUrl" | "hero2ImageUrl" }[] = [
   { slug: "mighty", image: "heroImageUrl" },
   { slug: "hearst", image: "heroImageUrl" },
@@ -16,7 +16,10 @@ const featuredImages: { slug: string; image: "heroImageUrl" | "hero2ImageUrl" }[
   { slug: "tfd", image: "hero2ImageUrl" },
 ]
 
-export function getCarouselSlides(projects: ProjectMetadata[]): CarouselSlide[] {
+export function getCarouselSlides(
+  projects: ProjectMetadata[],
+  imageColors: Record<string, string> = {},
+): CarouselSlide[] {
   const slides: CarouselSlide[] = []
   const included = new Set<string>()
   const featuredProjects = new Set<string>()
@@ -26,7 +29,7 @@ export function getCarouselSlides(projects: ProjectMetadata[]): CarouselSlide[] 
     const id = `${project.slug}-${image}`
     if (!src || included.has(id)) return
     included.add(id)
-    slides.push({ id, src, alt: `${project.title}${image === "hero2ImageUrl" ? " — secondary preview" : ""}` })
+    slides.push({ id, src, color: imageColors[src], alt: `${project.title}${image === "hero2ImageUrl" ? " — secondary preview" : ""}` })
   }
 
   for (const entry of featuredImages) {

@@ -3,6 +3,7 @@ import ShortDescription from '@/components/short-description'
 import { getAllProjects } from '@/lib/mdx'
 import FollowCursor from '@/components/follow-cursor';
 import ProjectsDisplay from '@/components/projects-display';
+import { getImageColors } from '@/lib/image-color';
 
 export default async function ProjectsPage() {
   const projects = await getAllProjects()
@@ -20,6 +21,10 @@ export default async function ProjectsPage() {
     externalUrl: project.externalUrl,
   }))
 
+  const imageColors = await getImageColors(
+    projects.flatMap(project => [project.heroImageUrl, project.hero2ImageUrl])
+  )
+
   return (
     <div className="bg-white min-h-[100svh] min-w-screen">
       <FollowCursor />
@@ -29,7 +34,7 @@ export default async function ProjectsPage() {
           <ShortDescription />
         </div>
         <div className="max-w-5xl mx-auto">
-          <ProjectsDisplay projects={formattedProjects} />
+          <ProjectsDisplay projects={formattedProjects} imageColors={imageColors} />
         </div>
       </main>
     </div>

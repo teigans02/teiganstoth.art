@@ -19,27 +19,26 @@ type Project = {
 
 interface ProjectListProps {
   projects: Project[];
+  imageColors: Record<string, string>;
 }
 
-const ProjectList: React.FC<ProjectListProps> = ({ projects }) => {
+const ProjectList: React.FC<ProjectListProps> = ({ projects, imageColors }) => {
   return (
     <>
       <h3 className="text-leading text-2xl font-medium mt-24">Selected Projects. <span className="text-gray-500">Explore some of my recent work in Social Growth, Brand Strategy and Digital Marketing.</span></h3>
       {projects.map((project) => (
         <div key={project.id}>
            <div className="divider border-t border-gray-200 my-8"></div>
-          <ProjectHero key={project.id} project={project} />
+          <ProjectHero key={project.id} project={project} imageColors={imageColors} />
         </div>
       ))}
     </>
   );
 };
 
-// Main component that combines both
-const ProjectsDisplay: React.FC<{projects: Project[]}> = ({ projects }) => {
-  const carouselSlides = getCarouselSlides(projects);
+const ProjectsDisplay: React.FC<ProjectListProps> = ({ projects, imageColors }) => {
+  const carouselSlides = getCarouselSlides(projects, imageColors);
 
-  // List projects remain sorted by date (most recent first)
   const listProjects = [...projects].sort((a, b) =>
     new Date(b.date).getTime() - new Date(a.date).getTime()
   );
@@ -47,7 +46,7 @@ const ProjectsDisplay: React.FC<{projects: Project[]}> = ({ projects }) => {
   return (
     <div className="container mx-auto py-8 md:py-12">
       <ProjectCarousel slides={carouselSlides} />
-      <ProjectList projects={listProjects} />
+      <ProjectList projects={listProjects} imageColors={imageColors} />
     </div>
   );
 };
