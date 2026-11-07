@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
-import { socialPreviewImage } from "@/lib/site-metadata";
+import { siteUrl, socialPreviewImage } from "@/lib/site-metadata";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,7 +29,7 @@ const instrument = localFont({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://teiganstoth.art"),
+  metadataBase: new URL(siteUrl),
   title: "Teigan Stothart",
   description: "Teigan Stothart is a London-based marketing strategist. Her experience spans DTC marketing, paid media, and consumer research.",
   openGraph: {

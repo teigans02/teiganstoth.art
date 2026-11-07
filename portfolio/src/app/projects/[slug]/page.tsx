@@ -4,6 +4,7 @@ import Header from "@/components/header"
 import { RevealImage } from "@/components/reveal-image"
 import { getImageColor } from "@/lib/image-color"
 import { getLocalImageSize } from "@/lib/local-image-size"
+import { siteUrl } from "@/lib/site-metadata"
 import { getAllProjects } from "@/lib/mdx"
 import { MDXRemote } from "next-mdx-remote/rsc"
 import { notFound } from "next/navigation"
@@ -28,7 +29,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const fileContent = fs.readFileSync(filePath, "utf8")
   const { data } = matter(fileContent)
   const title = `${data.title} | Teigan Stothart`
-  const url = `https://teiganstoth.art/projects/${encodeURIComponent(slug)}`
+  const url = `${siteUrl}/projects/${encodeURIComponent(slug)}`
   const images = data.heroImageUrl ? [{
     url: data.heroImageUrl,
     ...getLocalImageSize(data.heroImageUrl),

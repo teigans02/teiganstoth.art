@@ -1,10 +1,10 @@
 import type { Metadata } from "next"
 import Image from "next/image"
 import { getLocalImageSize } from "@/lib/local-image-size"
-import { socialPreviewImage } from "@/lib/site-metadata"
+import { siteUrl, socialPreviewImage } from "@/lib/site-metadata"
 
 const name = "Teigan Stothart"
-const url = "https://teiganstoth.art/about"
+const url = `${siteUrl}/about`
 const imagePath = "/images/teigan-stothart.jpeg"
 const description = "Teigan Stothart is a London-based marketing strategist. Her experience spans DTC marketing, paid media, and consumer research."
 
@@ -35,7 +35,7 @@ const jsonLd = {
     name,
     jobTitle: "Marketing strategist",
     description,
-    image: `https://teiganstoth.art${imagePath}`,
+    image: `${siteUrl}${imagePath}`,
     url,
     homeLocation: { "@type": "Place", name: "London" },
   },

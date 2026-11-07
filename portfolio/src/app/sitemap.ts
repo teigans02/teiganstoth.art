@@ -1,8 +1,9 @@
 import type { MetadataRoute } from "next"
 import { getAllProjects } from "@/lib/mdx"
+import { siteUrl } from "@/lib/site-metadata"
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const base = "https://teiganstoth.art"
+  const base = siteUrl
   const projects = await getAllProjects()
   return [
     {
