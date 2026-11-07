@@ -6,7 +6,7 @@ export interface CarouselSlide {
   alt: string
 }
 
-// Featured images appear in this order; other published projects follow by date.
+// Featured images appear in this order; other projects follow by date.
 const featuredImages: { slug: string; image: "heroImageUrl" | "hero2ImageUrl" }[] = [
   { slug: "mighty", image: "heroImageUrl" },
   { slug: "hearst", image: "heroImageUrl" },
@@ -17,7 +17,6 @@ const featuredImages: { slug: string; image: "heroImageUrl" | "hero2ImageUrl" }[
 ]
 
 export function getCarouselSlides(projects: ProjectMetadata[]): CarouselSlide[] {
-  const published = projects.filter(project => project.published !== false)
   const slides: CarouselSlide[] = []
   const included = new Set<string>()
   const featuredProjects = new Set<string>()
@@ -31,13 +30,13 @@ export function getCarouselSlides(projects: ProjectMetadata[]): CarouselSlide[] 
   }
 
   for (const entry of featuredImages) {
-    const project = published.find(project => project.slug === entry.slug)
+    const project = projects.find(project => project.slug === entry.slug)
     if (project && project[entry.image]) {
       add(project, entry.image)
       featuredProjects.add(project.slug)
     }
   }
-  for (const project of [...published].sort((a, b) => Date.parse(b.date) - Date.parse(a.date))) {
+  for (const project of [...projects].sort((a, b) => Date.parse(b.date) - Date.parse(a.date))) {
     if (!featuredProjects.has(project.slug)) add(project, "heroImageUrl")
   }
   return slides

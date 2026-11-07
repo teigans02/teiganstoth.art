@@ -6,16 +6,14 @@ import ProjectsDisplay from '@/components/projects-display';
 
 export default async function ProjectsPage() {
   const projects = await getAllProjects()
-  const publishedProjects = projects.filter(project => project.published !== false);
   
-  const formattedProjects = publishedProjects.map(project => ({
+  const formattedProjects = projects.map(project => ({
     id: project.slug,
     title: project.title,
     description: project.description,
     slug: project.slug,
     tags: project.tags || [],
     date: project.date,
-    published: project.published,
     workInProgress: project.workInProgress,
     heroImageUrl: project.heroImageUrl,
     hero2ImageUrl: project.hero2ImageUrl || undefined,

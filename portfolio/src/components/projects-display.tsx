@@ -13,7 +13,6 @@ type Project = {
   tags: string[];
   description: string;
   date: string;
-  published: boolean;
   workInProgress?: boolean;
   heroImageUrl: string;
   hero2ImageUrl?: string;

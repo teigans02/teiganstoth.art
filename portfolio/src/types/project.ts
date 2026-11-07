@@ -5,7 +5,6 @@ export interface ProjectMetadata {
   description: string
   date: string
   tags: string[]
-  published: boolean
   slug: string
   workInProgress?: boolean
   heroImageUrl: string

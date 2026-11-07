@@ -13,7 +13,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       ],
     },
     { url: `${base}/about`, images: [`${base}/images/teigan-stothart.jpeg`] },
-    ...projects.filter(project => project.published !== false).map(project => ({
+    ...projects.map(project => ({
       url: `${base}/projects/${project.slug}`,
     })),
   ]
