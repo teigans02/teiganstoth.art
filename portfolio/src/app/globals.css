@@ -23,7 +23,7 @@ body {
 }
 
 .project-link {
-  transition: opacity 150ms ease-out;
+  transition: opacity 150ms ease-out, transform 100ms ease-out;
 }
 
 .project-link:focus-visible {
