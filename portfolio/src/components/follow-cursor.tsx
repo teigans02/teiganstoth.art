@@ -8,11 +8,12 @@ const INTERACTIVE = 'a, button, [role="button"], input, textarea, select';
 const FINE_POINTER = '(hover: hover) and (pointer: fine)';
 const SPRING_CONFIG = { damping: 100, stiffness: 700, mass: 0.5 };
 
-type TargetKind = 'internal' | 'external';
+type TargetKind = 'internal' | 'external' | 'drag';
 
 function getTargetKind(el: EventTarget | null): TargetKind | null {
-  const target = el instanceof Element ? el.closest(INTERACTIVE) : null;
-  if (!target) return null;
+  if (!(el instanceof Element)) return null;
+  const target = el.closest(INTERACTIVE);
+  if (!target) return el.closest('[data-cursor="drag"]') ? 'drag' : null;
   if (
     target instanceof HTMLAnchorElement &&
     (target.target === '_blank' ||
@@ -97,12 +98,14 @@ const FollowCursor: React.FC = () => {
 
   if (!canHover) return null;
 
+  const isDrag = hover.active && hover.kind === 'drag';
+
   return (
     <motion.div
       initial={false}
       animate={{
-        opacity: visible ? 1 : 0,
-        scale: hover.active ? 1.1 : 0.7,
+        opacity: visible && !isDrag ? 1 : 0,
+        scale: isDrag ? 0.2 : hover.active ? 1.1 : 0.7,
       }}
       transition={{ type: 'spring', stiffness: 500, damping: 28 }}
       style={{
