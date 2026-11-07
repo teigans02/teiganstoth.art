@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
+import { socialPreviewImage } from "@/lib/site-metadata";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,11 +35,11 @@ export const metadata: Metadata = {
   openGraph: {
     siteName: "Teigan Stothart",
     type: "website",
-    images: [{ url: "/images/mighty/hero.jpg", width: 2000, height: 1500, alt: "Marketing and brand work for Mighty" }],
+    images: [socialPreviewImage],
   },
   twitter: {
     card: "summary_large_image",
-    images: ["/images/mighty/hero.jpg"],
+    images: [socialPreviewImage],
   },
 };
 

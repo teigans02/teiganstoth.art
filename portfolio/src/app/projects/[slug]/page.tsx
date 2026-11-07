@@ -8,10 +8,11 @@ import fs from "fs"
 import path from "path"
 import matter from "gray-matter"
 import Image from "next/image"
+import type { Metadata, ResolvingMetadata } from "next"
 
 export const dynamic = 'force-static'
 
-export async function generateMetadata({ params }: Props) {
+export async function generateMetadata({ params }: Props, parent: ResolvingMetadata): Promise<Metadata> {
   const { slug } = await params
   const filePath = path.join(process.cwd(), "src/projects", `${slug}.mdx`)
   
@@ -24,10 +25,28 @@ export async function generateMetadata({ params }: Props) {
 
   const fileContent = fs.readFileSync(filePath, "utf8")
   const { data } = matter(fileContent)
+  const title = `${data.title} | Teigan Stothart`
+  const url = `https://teiganstoth.art/projects/${encodeURIComponent(slug)}`
+  const inheritedMetadata = await parent
   
   return {
-    title: data.title,
+    title,
     description: data.description,
+    alternates: { canonical: url },
+    openGraph: {
+      siteName: "Teigan Stothart",
+      type: "website",
+      title,
+      description: data.description,
+      url,
+      images: inheritedMetadata.openGraph?.images ?? [],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description: data.description,
+      images: inheritedMetadata.twitter?.images ?? [],
+    },
   }
 }
 
@@ -128,4 +147,4 @@ export default async function ProjectPage({ params }: Props) {
       </div>
     </div>
   )
-} 
+}

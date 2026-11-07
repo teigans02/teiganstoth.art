@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import Image from "next/image"
 import { getLocalImageSize } from "@/lib/local-image-size"
+import { socialPreviewImage } from "@/lib/site-metadata"
 
 const name = "Teigan Stothart"
 const url = "https://teiganstoth.art/about"
@@ -17,11 +18,11 @@ export const metadata: Metadata = {
     url,
     title: "About Teigan Stothart",
     description,
-    images: [{ url: imagePath, width: 1085, height: 1291, alt: name }],
+    images: [socialPreviewImage],
   },
   twitter: {
     card: "summary_large_image",
-    images: [imagePath],
+    images: [socialPreviewImage],
   },
 }
 
