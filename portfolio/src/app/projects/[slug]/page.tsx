@@ -141,12 +141,12 @@ export default async function ProjectPage({ params }: Props) {
   return (
     <div className="min-h-[100svh] bg-white pb-[env(safe-area-inset-bottom,0px)]">
       <div className="hidden md:block">
-        <Header />
+        <Header width="max-w-3xl" />
       </div>
-      <div className="p-8 pt-[max(2rem,env(safe-area-inset-top,0px))] md:pt-8">
+      <div className="p-8 md:px-12 pt-[max(2rem,env(safe-area-inset-top,0px))] md:pt-8">
         <div className="max-w-3xl mx-auto">
           <BackButton />
-          <article className="mt-8 prose prose-md prose-headings:font-styrene prose-img:rounded-lg max-w-none">
+          <article className="mt-8 prose prose-md prose-headings:font-sans prose-headings:font-medium prose-strong:font-medium prose-img:rounded-lg max-w-none">
             <MDXRemote 
               source={content}
               components={{

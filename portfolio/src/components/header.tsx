@@ -1,10 +1,10 @@
 import Link from 'next/link';
 
-export default function Header() {
+export default function Header({ width = 'max-w-5xl' }: { width?: string }) {
   return (
     <header className="w-full pt-[calc(1.5rem+env(safe-area-inset-top,0px))] pb-6 px-6 md:px-12 bg-white md:sticky md:top-0 z-20">
-      <div className="flex justify-between items-center">
-        <Link href="/" className="text-lg">
+      <div className={`${width} mx-auto flex justify-between items-center`}>
+        <Link href="/" className="text-lg font-[480]">
           Teigan Stothart
         </Link>
         <nav className="flex space-x-6">

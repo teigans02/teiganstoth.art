@@ -16,15 +16,18 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      fontWeight: {
+        medium: '450',
+      },
       fontFamily: {
-        styrene: ['var(--font-styrene)', 'sans-serif'],
+        sans: ['var(--font-instrument-sans)', 'Arial', 'sans-serif'],
         instrument: ['var(--font-instrument)', 'serif'],
       },
       typography: {
         DEFAULT: {
           css: {
             'h1, h2, h3, h4, h5, h6': {
-              fontFamily: 'var(--font-styrene), sans-serif',
+              fontFamily: 'var(--font-instrument-sans), sans-serif',
             },
           },
         },

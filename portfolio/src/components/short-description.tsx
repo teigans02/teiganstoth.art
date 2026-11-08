@@ -5,7 +5,7 @@ export default function ShortDescription() {
       <div className="text-4xl md:text-6xl font-medium w-full font-instrument text-center">
         <i className="text-gray-500">I&apos;m Teigan</i>, a Marketing Strategist leveraging psychology to increase brand impact.
       </div>
-      <p className="text-md text-center font-medium text-gray-500 pt-2">Currently based in London, UK 🇬🇧</p>
+      <p className="text-md text-center font-medium text-gray-500 pt-2">Currently based in London</p>
     </div>
   )
 }

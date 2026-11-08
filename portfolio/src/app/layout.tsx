@@ -1,31 +1,20 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import localFont from "next/font/local";
+import { Instrument_Sans, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import { siteUrl, socialPreviewImage } from "@/lib/site-metadata";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const instrumentSans = Instrument_Sans({
+  variable: "--font-instrument-sans",
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-const styrene = localFont({
-  src: "../../public/fonts/StyreneA-Regular.otf",
-  variable: "--font-styrene",
   display: "swap",
-  adjustFontFallback: "Arial",
 });
 
-const instrument = localFont({
-  src: "../../public/fonts/Instrument-Serif.ttf",
+const instrument = Instrument_Serif({
   variable: "--font-instrument",
+  weight: "400",
+  style: "normal",
+  subsets: ["latin"],
   display: "swap",
-  adjustFontFallback: "Times New Roman",
 });
 
 export const metadata: Metadata = {
@@ -60,7 +49,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`light ${geistSans.variable} ${geistMono.variable} ${styrene.variable} ${instrument.variable}`}
+      className={`light ${instrumentSans.variable} ${instrument.variable}`}
     >
       <body className="antialiased text-gray-900">
         {children}
