@@ -21,6 +21,9 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: "Teigan Stothart",
   description: "Teigan Stothart is a London-based marketing strategist. Her experience spans DTC marketing, paid media, and consumer research.",
+  robots: {
+    googleBot: { "max-image-preview": "large" },
+  },
   openGraph: {
     siteName: "Teigan Stothart",
     type: "website",
