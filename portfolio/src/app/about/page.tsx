@@ -5,7 +5,7 @@ import { siteUrl, socialPreviewImage } from "@/lib/site-metadata"
 
 const name = "Teigan Stothart"
 const url = `${siteUrl}/about`
-const imagePath = "/images/teigan-stothart.jpeg"
+const imagePath = "/images/teigan-stothart.jpg"
 const description = "Teigan Stothart is a London-based marketing strategist. Her experience spans DTC marketing, paid media, and consumer research."
 
 export const metadata: Metadata = {

@@ -11,9 +11,9 @@ const featuredImages: { slug: string; image: "heroImageUrl" | "hero2ImageUrl" }[
   { slug: "mighty", image: "heroImageUrl" },
   { slug: "hearst", image: "heroImageUrl" },
   { slug: "mighty", image: "hero2ImageUrl" },
-  { slug: "nst", image: "heroImageUrl" },
+  { slug: "no-small-talk", image: "heroImageUrl" },
   { slug: "teiga", image: "heroImageUrl" },
-  { slug: "tfd", image: "hero2ImageUrl" },
+  { slug: "fat-duck", image: "hero2ImageUrl" },
 ]
 
 export function getCarouselSlides(
