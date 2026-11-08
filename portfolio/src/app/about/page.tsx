@@ -1,11 +1,16 @@
 import type { Metadata } from "next"
 import Image from "next/image"
 import { getLocalImageSize } from "@/lib/local-image-size"
-import { siteUrl, socialPreviewImage } from "@/lib/site-metadata"
+import { siteUrl } from "@/lib/site-metadata"
 
 const name = "Teigan Stothart"
 const url = `${siteUrl}/about`
 const imagePath = "/images/teigan-stothart.jpg"
+const profileImage = {
+  url: imagePath,
+  ...getLocalImageSize(imagePath),
+  alt: name,
+}
 const description = "Teigan Stothart is a London-based marketing strategist. Her experience spans DTC marketing, paid media, and consumer research."
 
 export const metadata: Metadata = {
@@ -18,11 +23,11 @@ export const metadata: Metadata = {
     url,
     title: "About Teigan Stothart",
     description,
-    images: [socialPreviewImage],
+    images: [profileImage],
   },
   twitter: {
     card: "summary_large_image",
-    images: [socialPreviewImage],
+    images: [profileImage],
   },
 }
 
