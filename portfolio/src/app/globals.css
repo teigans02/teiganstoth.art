@@ -7,6 +7,15 @@
   --foreground: #171717;
 }
 
+::selection {
+  background-color: #8C4F5C;
+  color: #FFF7F5;
+}
+
+img::selection {
+  background-color: transparent;
+}
+
 html {
   -webkit-tap-highlight-color: transparent;
   -webkit-text-size-adjust: 100%;
@@ -31,12 +40,6 @@ body {
   outline-offset: 6px;
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .project-link:hover {
-    opacity: 0.85;
-  }
-}
-
 .project-link:active {
   opacity: 0.75;
 }
@@ -57,6 +60,10 @@ button,
 a,
 [role="button"] {
   touch-action: manipulation;
+}
+
+button,
+[role="button"] {
   user-select: none;
   -webkit-user-select: none;
   -webkit-touch-callout: none;

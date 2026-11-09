@@ -14,14 +14,14 @@ const profileImage = {
 const description = "Teigan Stothart is a London-based marketing strategist. Her experience spans DTC marketing, paid media, and consumer research."
 
 export const metadata: Metadata = {
-  title: "Teigan Stothart | About",
+  title: "About | Teigan Stothart",
   description,
   alternates: { canonical: url },
   openGraph: {
     siteName: name,
     type: "profile",
     url,
-    title: "Teigan Stothart | About",
+    title: "About | Teigan Stothart",
     description,
     images: [profileImage],
   },
@@ -42,6 +42,10 @@ const jsonLd = {
     description,
     image: `${siteUrl}${imagePath}`,
     url,
+    sameAs: [
+      "https://www.instagram.com/teigastudios/",
+      "https://www.linkedin.com/in/teigan-stothart-40a8b323a/",
+    ],
     homeLocation: { "@type": "Place", name: "London" },
   },
 }
