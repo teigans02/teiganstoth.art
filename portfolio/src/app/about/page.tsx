@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import Image from "next/image"
+import Link from "next/link"
 import { getLocalImageSize } from "@/lib/local-image-size"
 import { siteUrl } from "@/lib/site-metadata"
 
@@ -71,6 +72,9 @@ export default function AboutPage() {
         unoptimized
       />
       <p className="mt-6 shrink-0 text-lg leading-relaxed text-gray-700">{description}</p>
+      <Link href="/" className="mt-4 shrink-0 self-start text-lg leading-relaxed text-gray-700 underline underline-offset-4">
+        View work
+      </Link>
     </main>
   )
 }
